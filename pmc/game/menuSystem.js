@@ -809,16 +809,11 @@ const MenuSystem = {
         }
         
         // 初始化游戏
+        UI.init();
+        App.init();
         if (!window.gameInitialized) {
-            UI.init();
-            App.init();
             TimeSystem.init();
             window.gameInitialized = true;
-        } else {
-            // 重新绑定事件
-            App.bindEvents();
-            // 重新渲染
-            GameState.notify();
         }
         
         // 自动存档

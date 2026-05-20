@@ -194,24 +194,15 @@ const Pages = {
             html += '<div class="section-title">🏙 城市研究</div>';
             const cities = InitialData.getCities();
             cities.forEach(function(city) {
-                html += '<div class="card">' +
-                    '<div class="card-header">' +
-                        '<div class="card-title">' + city.name + '</div>' +
-                    '</div>' +
-                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">平均房价</div>' +
-                            '<div style="font-weight:600;color:#f97316">' + Utils.formatMoney(city.avgPrice) + '</div>' +
-                        '</div>' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">发展潜力</div>' +
-                            '<div style="font-weight:600;color:#22c55e">' + (Math.floor(Math.random() * 30) + 70) + '%</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div style="margin-top:10px;color:#94a3b8;font-size:13px">' +
-                        city.name + '是热门投资城市，未来发展前景广阔' +
-                    '</div>' +
-                '</div>';
+                html += ModuleComponents.moduleButton({
+                    icon: '🏙️',
+                    title: city.name,
+                    subtitle: city.description || city.name + ' - 热门投资城市',
+                    progress: Math.floor(Math.random() * 40) + 60,
+                    progressText: '发展潜力 ' + (Math.floor(Math.random() * 30) + 70) + '%',
+                    badge: Utils.formatMoney(city.avgPrice),
+                    onclick: "UI.showToast('查看" + city.name + "详情')"
+                });
             });
         } else if (activeTab === 1) {
             // 土地市场 - 增强版
@@ -292,36 +283,34 @@ const Pages = {
             html += '<div class="section-title">🏢 竞争对手</div>';
             const competitors = InitialData.getVirtualCompanyNames();
             competitors.slice(0, 8).forEach(function(comp, i) {
-                html += '<div class="card">' +
-                    '<div class="card-header">' +
-                        '<div class="card-title">' + comp + '</div>' +
-                        '<span style="color:#94a3b8;font-size:12px">行业排名 #' + (i + 1) + '</span>' +
-                    '</div>' +
-                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">市场份额</div>' +
-                            '<div style="font-weight:600">' + (Math.random() * 8 + 2).toFixed(1) + '%</div>' +
-                        '</div>' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">资金实力</div>' +
-                            '<div style="font-weight:600;color:#22c55e">' + (Math.floor(Math.random() * 3) + 3) + '星</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+                html += ModuleComponents.moduleButton({
+                    icon: '🏢',
+                    title: comp,
+                    subtitle: '行业排名 #' + (i + 1),
+                    badge: (Math.floor(Math.random() * 3) + 3) + '星',
+                    variant: i < 3 ? 'success' : 'info',
+                    progress: Math.floor(Math.random() * 30) + 70,
+                    progressText: '市场份额 ' + ((Math.random() * 8 + 2).toFixed(1)) + '%',
+                    onclick: "UI.showToast('查看" + comp + "详情')"
+                });
             });
         } else if (activeTab === 5) {
             // 资产交易
-            html += '<div class="section-title">💱 资产交易</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">土地资产交易</div>' +
-                    '<div class="card-subtitle">买卖土地资产，优化资产配置</div>' +
-                    '<div style="margin-top:15px;color:#94a3b8;font-size:13px;text-align:center;padding:20px">暂无交易记录</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">项目股权转让</div>' +
-                    '<div class="card-subtitle">转让项目股权，获取资金回报</div>' +
-                    '<div style="margin-top:15px;color:#94a3b8;font-size:13px;text-align:center;padding:20px">暂无股权交易</div>' +
-                '</div>';
+            html += '<div class="section-title">💱 资产交易</div>';
+            html += ModuleComponents.moduleButton({
+                icon: '🏗️',
+                title: '土地资产交易',
+                subtitle: '买卖土地资产，优化资产配置',
+                badge: '暂无',
+                onclick: "UI.showToast('土地交易功能开发中')"
+            });
+            html += ModuleComponents.moduleButton({
+                icon: '📊',
+                title: '项目股权转让',
+                subtitle: '转让项目股权，获取资金回报',
+                badge: '暂无',
+                onclick: "UI.showToast('股权转让功能开发中')"
+            });
         }
         
         return html;

@@ -45,6 +45,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useRegistrationStore } from '@/stores/registration'
+import { useGameStore } from '@/stores/game'
 import Step1Province from './Step1-Province.vue'
 import Step2Name from './Step2-Name.vue'
 import Step3Type from './Step3-Type.vue'
@@ -60,6 +61,7 @@ import Step11Complete from './Step11-Complete.vue'
 const router = useRouter()
 const route = useRoute()
 const registrationStore = useRegistrationStore()
+const gameStore = useGameStore()
 
 const currentStep = ref(parseInt(route.params.step as string) || 1)
 
@@ -100,6 +102,7 @@ function prevStep() {
 }
 
 function startGame() {
+  gameStore.createNewGame(registrationStore.data)
   router.push('/game')
 }
 </script>

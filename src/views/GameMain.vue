@@ -10,11 +10,11 @@
         <div class="grid grid-cols-4 gap-2 text-center">
           <div class="bg-white/5 rounded-lg p-2">
             <div class="text-xs text-white/50">现金</div>
-            <div class="text-amber-400 font-bold text-sm">{{ formatMoney(cash) }}</div>
+            <div class="text-amber-400 font-bold text-sm">{{ formatMoney(cash || 0) }}</div>
           </div>
           <div class="bg-white/5 rounded-lg p-2">
             <div class="text-xs text-white/50">总资产</div>
-            <div class="text-green-400 font-bold text-sm">{{ formatMoney(totalAssets) }}</div>
+            <div class="text-green-400 font-bold text-sm">{{ formatMoney(totalAssets || 0) }}</div>
           </div>
           <div class="bg-white/5 rounded-lg p-2">
             <div class="text-xs text-white/50">资质</div>
@@ -155,13 +155,24 @@
 
         <!-- 投资系统页面 -->
         <div v-else-if="activeTab === 'investment'">
-          <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
+          <div class="grid grid-cols-3 gap-2 mb-4">
             <button
-              v-for="(tab, idx) in investmentTabs"
+              v-for="(tab, idx) in investmentTabs.slice(0, 3)"
               :key="idx"
-              class="btn-primary whitespace-nowrap text-sm"
+              class="btn-primary text-sm py-2"
               :class="activeInvestmentTab === idx ? 'bg-amber-500' : ''"
               @click="activeInvestmentTab = idx"
+            >
+              {{ tab }}
+            </button>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mb-4">
+            <button
+              v-for="(tab, idx) in investmentTabs.slice(3, 6)"
+              :key="idx + 3"
+              class="btn-primary text-sm py-2"
+              :class="activeInvestmentTab === (idx + 3) ? 'bg-amber-500' : ''"
+              @click="activeInvestmentTab = (idx + 3)"
             >
               {{ tab }}
             </button>

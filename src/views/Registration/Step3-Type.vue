@@ -1,5 +1,5 @@
 <template>
-  <div class="step-container">
+  <div>
     <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
       <span class="text-3xl">🏢</span>
       选择企业性质
@@ -82,13 +82,13 @@
     <!-- 操作按钮 -->
     <div class="mt-8 flex gap-4">
       <button
-        @click="prevStep"
+        @click="handleBack"
         class="flex-1 py-3 px-6 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold transition-all"
       >
         ← 上一步
       </button>
       <button
-        @click="nextStep"
+        @click="handleComplete"
         :disabled="!selectedType"
         :class="[
           'flex-1 py-3 px-6 rounded-xl font-bold transition-all',
@@ -109,6 +109,7 @@ import { useRouter } from 'vue-router'
 import { useRegistrationStore } from '@/stores/registration'
 import { enterpriseTypes } from '@/data/registrationData'
 
+const emit = defineEmits(['complete', 'back'])
 const router = useRouter()
 const registrationStore = useRegistrationStore()
 
@@ -128,36 +129,13 @@ function getDifficultyClass(difficulty: string) {
   }
 }
 
-function prevStep() {
-  registrationStore.setStep(2)
-  router.push('/registration/2')
+function handleBack() {
+  emit('back')
 }
 
-function nextStep() {
+function handleComplete() {
   if (selectedType.value) {
-    registrationStore.setStep(4)
-    router.push('/registration/4')
+    emit('complete')
   }
 }
 </script>
-
-<style scoped>
-.step-container {
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.step-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.step-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.step-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-</style>

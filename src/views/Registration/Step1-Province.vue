@@ -1,5 +1,5 @@
 <template>
-  <div class="step-container">
+  <div>
     <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
       <span class="text-3xl">📍</span>
       选择注册地区
@@ -55,7 +55,7 @@
         返回主菜单
       </button>
       <button
-        @click="nextStep"
+        @click="handleComplete"
         :disabled="!selectedProvince"
         :class="[
           'flex-1 py-3 px-6 rounded-xl font-bold transition-all',
@@ -76,6 +76,7 @@ import { useRouter } from 'vue-router'
 import { useRegistrationStore } from '@/stores/registration'
 import { provinces } from '@/data/registrationData'
 
+const emit = defineEmits(['complete'])
 const router = useRouter()
 const registrationStore = useRegistrationStore()
 
@@ -101,31 +102,9 @@ function goBack() {
   router.push('/')
 }
 
-function nextStep() {
+function handleComplete() {
   if (selectedProvince.value) {
-    registrationStore.setStep(2)
-    router.push('/registration/2')
+    emit('complete')
   }
 }
 </script>
-
-<style scoped>
-.step-container {
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.step-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.step-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.step-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-</style>

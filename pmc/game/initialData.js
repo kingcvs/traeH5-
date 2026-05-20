@@ -146,6 +146,19 @@ const InitialData = {
     
     // 根据参数创建初始游戏状态
     createInitialStateWithParams: function(params) {
+        // 初始化银行关系
+        const banks = this.getBanks();
+        const bankRelations = {};
+        banks.forEach(function(bank) {
+            bankRelations[bank.id] = {
+                relation: bank.initialRelation,
+                totalLoans: 0,
+                overdueCount: 0,
+                defaultCount: 0,
+                lastRepayment: null
+            };
+        });
+        
         return {
             date: new Date(2008, 0, 1),
             isPaused: true,
@@ -163,6 +176,7 @@ const InitialData = {
                 qualificationLevel: 4,
                 qualificationProgress: 0,
                 creditLevel: 'C',
+                creditLeverage: 0.05,  // 信用杠杆，B级=0.05
                 developableArea: 100000,
                 totalCompletedArea: 0,
                 positiveReviews: 0,
@@ -204,7 +218,32 @@ const InitialData = {
             events: this.generateEvents({ 
                 company: { city: params.city }, 
                 projects: [] 
-            })
+            }),
+            // 银行关系
+            bankRelations: bankRelations,
+            // 三条红线状态
+            redLineStatus: {
+                assetLiabilityRatio: 0,  // 剔除预收款资产负债率
+                netDebtRatio: 50,         // 净负债率
+                cashShortTermDebtRatio: 2.0,  // 现金短债比
+                tier: GameTypes.RedLineTier.GREEN,  // 当前档位
+                lastCheckDate: new Date(2008, 0, 1)
+            },
+            // 存款
+            deposits: [],
+            // 股权融资历史
+            fundingHistory: [],
+            // 上市公司状态
+            listedStatus: {
+                isListed: false,
+                listingProgress: 0,
+                preparationStartDate: null,
+                sponsors: null,
+                auditors: null,
+                lawyers: null
+            },
+            // 表外负债
+            offBalanceSheetDebt: []
         };
     },
     
@@ -436,7 +475,7 @@ const InitialData = {
             constructionCost: devData.constructionCost,
             constructionDuration: devData.duration,
             profitRate: devData.profitRate,
-            description: `${devType}项目，位于${city.name}黄金地段，发展潜力大`
+            description: devType + '项目，位于' + city.name + '黄金地段，发展潜力大'
         };
     },
     
@@ -649,6 +688,153 @@ const InitialData = {
                 interestRate: 0.07,
                 minTerm: 36,
                 maxTerm: 120
+            }
+        ];
+    },
+    
+    // 获取银行数据
+    getBanks: function() {
+        return [
+            {
+                id: GameTypes.BankType.ICBC,
+                name: '工商银行',
+                baseRate: 0.041,
+                feature: '额度大',
+                initialRelation: 50,
+                description: '国有大行，贷款额度充足，适合大额融资'
+            },
+            {
+                id: GameTypes.BankType.CCB,
+                name: '建设银行',
+                baseRate: 0.040,
+                feature: '利率低但慢',
+                initialRelation: 50,
+                description: '审批较慢但利率较低，适合稳健型融资'
+            },
+            {
+                id: GameTypes.BankType.ABC,
+                name: '农业银行',
+                baseRate: 0.042,
+                feature: '速度快',
+                initialRelation: 50,
+                description: '审批效率高，适合急需资金的情况'
+            },
+            {
+                id: GameTypes.BankType.BOC,
+                name: '中国银行',
+                baseRate: 0.039,
+                feature: '利率最低额度紧',
+                initialRelation: 40,
+                description: '利率最低但额度紧张，需要良好关系'
+            },
+            {
+                id: GameTypes.BankType.JOINT_STOCK,
+                name: '股份制银行',
+                baseRate: 0.045,
+                feature: '灵活快速额度小',
+                initialRelation: 50,
+                description: '审批灵活但额度有限，适合灵活周转'
+            }
+        ];
+    },
+    
+    // 获取股权融资轮次
+    getFundingRounds: function() {
+        return [
+            {
+                id: GameTypes.FundingRound.ANGEL,
+                name: '天使轮',
+                dilutionMin: 0.10,
+                dilutionMax: 0.20,
+                valuationMultiple: { min: 3, max: 5 },
+                revenueThreshold: 0,
+                description: '种子轮融资，适合初创企业'
+            },
+            {
+                id: GameTypes.FundingRound.A,
+                name: 'A轮',
+                dilutionMin: 0.10,
+                dilutionMax: 0.15,
+                valuationMultiple: { min: 2, max: 3 },
+                revenueThreshold: 50000000,
+                description: '第一轮正式融资，需要一定营收基础'
+            },
+            {
+                id: GameTypes.FundingRound.B,
+                name: 'B轮',
+                dilutionMin: 0.05,
+                dilutionMax: 0.10,
+                valuationMultiple: { min: 1.5, max: 2 },
+                revenueThreshold: 200000000,
+                description: '扩张期融资，需要较大营收规模'
+            },
+            {
+                id: GameTypes.FundingRound.C,
+                name: 'C轮',
+                dilutionMin: 0.05,
+                dilutionMax: 0.10,
+                valuationMultiple: { min: 1.2, max: 1.5 },
+                revenueThreshold: 1000000000,
+                description: '成熟期融资，市场地位稳固'
+            },
+            {
+                id: GameTypes.FundingRound.PRE_IPO,
+                name: 'Pre-IPO',
+                dilutionMin: 0.05,
+                dilutionMax: 0.08,
+                valuationMultiple: { min: 1, max: 1.2 },
+                revenueThreshold: 5000000000,
+                description: '上市前最后一轮融资'
+            },
+            {
+                id: GameTypes.FundingRound.IPO,
+                name: 'IPO',
+                dilutionMin: 0.10,
+                dilutionMax: 0.25,
+                valuationMultiple: { min: 0, max: 0 },
+                revenueThreshold: 10000000000,
+                description: '首次公开募股，登录资本市场'
+            }
+        ];
+    },
+    
+    // 获取存款产品
+    getDepositProducts: function() {
+        return [
+            {
+                id: 'demand',
+                name: '活期存款',
+                rate: 0.003,
+                term: 0,
+                description: '随时存取，灵活方便'
+            },
+            {
+                id: 'agreement',
+                name: '协定存款',
+                rate: 0.012,
+                term: 0,
+                description: '大额存款协议，利率较高'
+            },
+            {
+                id: '3month',
+                name: '3个月定期',
+                rate: 0.015,
+                term: 3,
+                description: '短期存款，收益稳定'
+            },
+            {
+                id: '6month',
+                name: '6个月定期',
+                rate: 0.018,
+                term: 6,
+                description: '中期存款，收益较好'
+            },
+            {
+                id: '1year',
+                name: '1年期定期',
+                rate: 0.021,
+                term: 12,
+                description: '长期存款，收益最高'
             }
         ];
     }

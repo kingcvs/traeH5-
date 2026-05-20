@@ -1,9 +1,61 @@
 // 菜单系统
 const MenuSystem = {
-    VERSION: 'v1.0',
+    VERSION: 'v2.3',
     
     // 更新日志
     CHANGELOG: [
+        {
+            version: 'v2.3',
+            date: '2026-05-20',
+            changes: [
+                '✨ 全新游戏模块按钮样式系统',
+                '🎨 添加30+个模块按钮CSS类',
+                '📦 新增ModuleComponents组件库',
+                '💫 支持图标、徽章、进度条、箭头',
+                '🎭 多种变体（primary/success/danger/info）',
+                '📱 筛选按钮和标签组件',
+                '🏷️ 状态徽章和排名徽章',
+                '⚡ 触控设备优化',
+                '🎯 美化投资页面城市研究模块',
+                '🏢 美化竞争对手模块',
+                '💱 美化资产交易模块'
+            ]
+        },
+        {
+            version: 'v2.1',
+            date: '2026-05-21',
+            changes: [
+                '📰 全新杂志风格UI设计',
+                '🎨 克制的深蓝金配色方案',
+                '✨ 无卡片设计，线性信息层次',
+                '🏢 主菜单海报式布局',
+                '📱 流畅的入场动画和微交互',
+                '🎯 极简的底部导航设计'
+            ]
+        },
+        {
+            version: 'v2.0',
+            date: '2026-05-21',
+            changes: [
+                '✨ 全新GOLD EDITION黑金奢华UI设计',
+                '🎨 采用渐变色彩和精致动画效果',
+                '🌟 玻璃拟态设计，现代感十足',
+                '🏆 符合主流文字模拟游戏的视觉风格',
+                '📱 优化触控体验和动画流畅度',
+                '✨ 添加噪声纹理和视觉层次效果'
+            ]
+        },
+        {
+            version: 'v1.1',
+            date: '2026-05-21',
+            changes: [
+                '🔧 修复项目页面切换后卡住不动的问题',
+                '💾 修复存档管理读取存档无响应的问题',
+                '▶️ 修复继续游戏无法正常进入的问题',
+                '📱 修复按钮点击和页面自动缩放的问题',
+                '📝 完善更新日志显示功能'
+            ]
+        },
         {
             version: 'v1.0',
             date: '2026-05-20',
@@ -744,6 +796,10 @@ const MenuSystem = {
             mainMenu.style.display = 'none';
         }
         
+        // 重置页面状态
+        Pages.currentPage = 'overview';
+        Pages.tabStates = {};
+        
         // 重新构建游戏界面结构
         const gameApp = document.getElementById('app');
         if (gameApp) {
@@ -809,17 +865,11 @@ const MenuSystem = {
         }
         
         // 初始化游戏
-        if (!window.gameInitialized) {
-            UI.init();
-            App.init();
-            TimeSystem.init();
-            window.gameInitialized = true;
-        } else {
-            // 重新绑定事件
-            App.bindEvents();
-            // 重新渲染
-            GameState.notify();
-        }
+        UI.init();
+        App.init();
+        // 确保时间系统初始化（即使是再次进入游戏也重置）
+        TimeSystem.init();
+        window.gameInitialized = true;
         
         // 自动存档
         this.autoSave();

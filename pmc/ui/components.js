@@ -17,6 +17,11 @@ const UI = {
     
     // 显示Toast
     showToast: function(message) {
+        // 如果Toast容器不存在，先创建
+        if (!this.toastContainer) {
+            this.createToastContainer();
+        }
+        
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.textContent = message;

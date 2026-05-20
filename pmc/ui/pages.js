@@ -121,26 +121,26 @@ const Pages = {
                     '</div>' +
                     '<div>' +
                         '<div style="color:#94a3b8;font-size:12px">房价指数</div>' +
-                        '<div style="font-weight:600">' + state.marketEnv.housingPriceIndex + '</div>' +
+                        '<div style="font-weight:600">' + state.marketEnv.housingPriceIndex.toFixed(1) + '</div>' +
                     '</div>' +
                     '<div>' +
                         '<div style="color:#94a3b8;font-size:12px">市场需求</div>' +
-                        '<div style="font-weight:600">' + state.marketEnv.marketDemand + '%</div>' +
+                        '<div style="font-weight:600">' + state.marketEnv.marketDemand.toFixed(0) + '%</div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
             '<div class="section-title">📈 宏观经济指标</div>' +
             '<div class="card">' +
                 '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:12px">' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">GDP增速</span><span style="font-weight:600">' + state.macroData.gdpGrowth + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">CPI</span><span style="font-weight:600">' + state.macroData.cpi + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">M2增速</span><span style="font-weight:600">' + state.macroData.m2Growth + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">5Y-LPR</span><span style="font-weight:600">' + state.macroData.lpr5y + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">房贷利率</span><span style="font-weight:600">' + state.macroData.mortgageRate + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">汇率</span><span style="font-weight:600">' + state.macroData.exchangeRate + '</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">居民杠杆</span><span style="font-weight:600">' + state.macroData.householdLeverage + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">PMI</span><span style="font-weight:600">' + state.macroData.pmi + '</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">消费信心</span><span style="font-weight:600">' + state.macroData.consumerConfidence + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">GDP增速</span><span style="font-weight:600">' + state.macroData.gdpGrowth.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">CPI</span><span style="font-weight:600">' + state.macroData.cpi.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">M2增速</span><span style="font-weight:600">' + state.macroData.m2Growth.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">5Y-LPR</span><span style="font-weight:600">' + state.macroData.lpr5y.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">房贷利率</span><span style="font-weight:600">' + state.macroData.mortgageRate.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">汇率</span><span style="font-weight:600">' + state.macroData.exchangeRate.toFixed(1) + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">居民杠杆</span><span style="font-weight:600">' + state.macroData.householdLeverage.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">PMI</span><span style="font-weight:600">' + state.macroData.pmi.toFixed(1) + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">消费信心</span><span style="font-weight:600">' + state.macroData.consumerConfidence.toFixed(1) + '</span></div>' +
                 '</div>' +
             '</div>' +
             '<div class="section-title">📰 最近动态</div>';
@@ -194,24 +194,15 @@ const Pages = {
             html += '<div class="section-title">🏙 城市研究</div>';
             const cities = InitialData.getCities();
             cities.forEach(function(city) {
-                html += '<div class="card">' +
-                    '<div class="card-header">' +
-                        '<div class="card-title">' + city.name + '</div>' +
-                    '</div>' +
-                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">平均房价</div>' +
-                            '<div style="font-weight:600;color:#f97316">' + Utils.formatMoney(city.avgPrice) + '</div>' +
-                        '</div>' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">发展潜力</div>' +
-                            '<div style="font-weight:600;color:#22c55e">' + (Math.floor(Math.random() * 30) + 70) + '%</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div style="margin-top:10px;color:#94a3b8;font-size:13px">' +
-                        city.name + '是热门投资城市，未来发展前景广阔' +
-                    '</div>' +
-                '</div>';
+                html += ModuleComponents.moduleButton({
+                    icon: '🏙️',
+                    title: city.name,
+                    subtitle: city.description || city.name + ' - 热门投资城市',
+                    progress: Math.floor(Math.random() * 40) + 60,
+                    progressText: '发展潜力 ' + (Math.floor(Math.random() * 30) + 70) + '%',
+                    badge: Utils.formatMoney(city.avgPrice),
+                    onclick: "UI.showToast('查看" + city.name + "详情')"
+                });
             });
         } else if (activeTab === 1) {
             // 土地市场 - 增强版
@@ -267,7 +258,7 @@ const Pages = {
                     '<div style="margin-top:15px">' +
                         '<div style="display:flex;justify-content:space-between;margin-bottom:10px">' +
                             '<span>房价指数</span>' +
-                            '<span style="color:#22c55e;font-weight:600">' + (state.marketEnv?.housingPriceIndex || 1.0).toFixed(2) + '</span>' +
+                            '<span style="color:#22c55e;font-weight:600">' + (state.marketEnv?.housingPriceIndex || 1.0).toFixed(1) + '</span>' +
                         '</div>' +
                         '<div class="progress-bar">' +
                             '<div class="progress-fill" style="width:' + ((state.marketEnv?.housingPriceIndex || 1.0) * 70) + '%"></div>' +
@@ -276,7 +267,7 @@ const Pages = {
                     '<div style="margin-top:15px">' +
                         '<div style="display:flex;justify-content:space-between;margin-bottom:10px">' +
                             '<span>市场需求</span>' +
-                            '<span style="color:#3b82f6;font-weight:600">' + (state.marketEnv?.marketDemand || 75) + '%</span>' +
+                            '<span style="color:#3b82f6;font-weight:600">' + (state.marketEnv?.marketDemand || 75).toFixed(0) + '%</span>' +
                         '</div>' +
                         '<div class="progress-bar">' +
                             '<div class="progress-fill" style="width:' + (state.marketEnv?.marketDemand || 75) + '%;background:linear-gradient(90deg,#3b82f6 0%,#60a5fa 100%)"></div>' +
@@ -292,36 +283,34 @@ const Pages = {
             html += '<div class="section-title">🏢 竞争对手</div>';
             const competitors = InitialData.getVirtualCompanyNames();
             competitors.slice(0, 8).forEach(function(comp, i) {
-                html += '<div class="card">' +
-                    '<div class="card-header">' +
-                        '<div class="card-title">' + comp + '</div>' +
-                        '<span style="color:#94a3b8;font-size:12px">行业排名 #' + (i + 1) + '</span>' +
-                    '</div>' +
-                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">市场份额</div>' +
-                            '<div style="font-weight:600">' + (Math.random() * 8 + 2).toFixed(1) + '%</div>' +
-                        '</div>' +
-                        '<div>' +
-                            '<div style="color:#94a3b8;font-size:12px">资金实力</div>' +
-                            '<div style="font-weight:600;color:#22c55e">' + (Math.floor(Math.random() * 3) + 3) + '星</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+                html += ModuleComponents.moduleButton({
+                    icon: '🏢',
+                    title: comp,
+                    subtitle: '行业排名 #' + (i + 1),
+                    badge: (Math.floor(Math.random() * 3) + 3) + '星',
+                    variant: i < 3 ? 'success' : 'info',
+                    progress: Math.floor(Math.random() * 30) + 70,
+                    progressText: '市场份额 ' + ((Math.random() * 8 + 2).toFixed(1)) + '%',
+                    onclick: "UI.showToast('查看" + comp + "详情')"
+                });
             });
         } else if (activeTab === 5) {
             // 资产交易
-            html += '<div class="section-title">💱 资产交易</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">土地资产交易</div>' +
-                    '<div class="card-subtitle">买卖土地资产，优化资产配置</div>' +
-                    '<div style="margin-top:15px;color:#94a3b8;font-size:13px;text-align:center;padding:20px">暂无交易记录</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">项目股权转让</div>' +
-                    '<div class="card-subtitle">转让项目股权，获取资金回报</div>' +
-                    '<div style="margin-top:15px;color:#94a3b8;font-size:13px;text-align:center;padding:20px">暂无股权交易</div>' +
-                '</div>';
+            html += '<div class="section-title">💱 资产交易</div>';
+            html += ModuleComponents.moduleButton({
+                icon: '🏗️',
+                title: '土地资产交易',
+                subtitle: '买卖土地资产，优化资产配置',
+                badge: '暂无',
+                onclick: "UI.showToast('土地交易功能开发中')"
+            });
+            html += ModuleComponents.moduleButton({
+                icon: '📊',
+                title: '项目股权转让',
+                subtitle: '转让项目股权，获取资金回报',
+                badge: '暂无',
+                onclick: "UI.showToast('股权转让功能开发中')"
+            });
         }
         
         return html;
@@ -330,7 +319,8 @@ const Pages = {
     // 渲染项目页面
     project: function() {
         const state = GameState.get();
-        this.tabStates.project = this.tabStates.project || { list: true, activeProject: null, activeTab: 'certificates' };
+        // 修复默认标签页为 preparation，与 renderProjectTabs 匹配
+        this.tabStates.project = this.tabStates.project || { list: true, activeProject: null, activeTab: 'preparation' };
         const ts = this.tabStates.project;
         
         // 如果没有活动项目，显示项目列表
@@ -360,13 +350,13 @@ const Pages = {
     
     // 打开演示项目
     openProjectDemo: function() {
-        this.tabStates.project = { list: false, activeProject: 'demo', activeTab: 'certificates' };
+        this.tabStates.project = { list: false, activeProject: 'demo', activeTab: 'preparation' };
         GameState.notify();
     },
     
     // 打开项目详情
     openProjectDetail: function(projectId) {
-        this.tabStates.project = { list: false, activeProject: projectId, activeTab: 'certificates' };
+        this.tabStates.project = { list: false, activeProject: projectId, activeTab: 'preparation' };
         GameState.notify();
     },
     
@@ -416,26 +406,33 @@ const Pages = {
         
         // 标签页内容
         switch (activeTab) {
-            case 'certificates':
-                html += this.renderCertificatesTab(project, state);
+            case 'preparation':
+                html += this.renderPreparationTab(project, state);
                 break;
-            case 'design':
-                html += this.renderDesignTab(project);
+            case 'approval':
+                html += this.renderApprovalTab(project, state);
                 break;
             case 'construction':
-                html += this.renderConstructionTab(project);
+                html += this.renderConstructionTab(project, state);
                 break;
-            case 'cost':
-                html += this.renderCostTab(project);
+            case 'presale':
+                html += this.renderPresaleTab(project, state);
                 break;
-            case 'procurement':
-                html += this.renderProcurementTab(project);
+            case 'marketing':
+                html += this.renderMarketingTab(project, state);
                 break;
-            case 'planning':
-                html += this.renderPlanningTab(project);
+            case 'contracting':
+                html += this.renderContractingTab(project, state);
+                break;
+            case 'delivery':
+                html += this.renderDeliveryTab(project, state);
                 break;
             case 'finance':
-                html += this.renderProjectFinanceTab(project);
+                html += this.renderProjectFinanceTab(project, state);
+                break;
+            default:
+                // 默认显示前期筹备
+                html += this.renderPreparationTab(project, state);
                 break;
         }
         
@@ -529,12 +526,13 @@ const Pages = {
     // 渲染项目标签页
     renderProjectTabs: function(project, activeTab) {
         const tabs = [
-            { id: 'certificates', label: '四证办理' },
-            { id: 'design', label: '设计管理' },
+            { id: 'preparation', label: '前期筹备' },
+            { id: 'approval', label: '报批报建' },
             { id: 'construction', label: '工程管理' },
-            { id: 'cost', label: '成本控制' },
-            { id: 'procurement', label: '招采管理' },
-            { id: 'planning', label: '单元规划' },
+            { id: 'presale', label: '预售开盘' },
+            { id: 'marketing', label: '营销蓄客' },
+            { id: 'contracting', label: '签约回款' },
+            { id: 'delivery', label: '竣工交付' },
             { id: 'finance', label: '资金管理' }
         ];
         
@@ -649,49 +647,44 @@ const Pages = {
             '</div>';
     },
     
+    // 渲染前期筹备标签页
+    renderPreparationTab: function(project, state) {
+        return ProjectPages.renderPreparationTab(project, state);
+    },
+    
+    // 渲染报批报建标签页
+    renderApprovalTab: function(project, state) {
+        return ProjectPages.renderApprovalTab(project, state);
+    },
+    
     // 渲染工程管理标签页
-    renderConstructionTab: function(project) {
-        return '<div class="section-title" style="margin-top:16px">🏗️ 工程管理</div>' +
-            '<div class="card">' +
-                '<div class="card-title">工程进度</div>' +
-                '<div class="card-subtitle" style="margin-top:8px">暂未开始施工</div>' +
-            '</div>';
+    renderConstructionTab: function(project, state) {
+        return ProjectPages.renderConstructionTab(project, state);
     },
     
-    // 渲染成本控制标签页
-    renderCostTab: function(project) {
-        return '<div class="section-title" style="margin-top:16px">💰 成本控制</div>' +
-            '<div class="card">' +
-                '<div class="card-title">成本预算</div>' +
-                '<div class="card-subtitle" style="margin-top:8px">设计阶段确定后可查看详细成本</div>' +
-            '</div>';
+    // 渲染预售开盘标签页
+    renderPresaleTab: function(project, state) {
+        return ProjectPages.renderPresaleTab(project, state);
     },
     
-    // 渲染招采管理标签页
-    renderProcurementTab: function(project) {
-        return '<div class="section-title" style="margin-top:16px">📦 招采管理</div>' +
-            '<div class="card">' +
-                '<div class="card-title">供应商管理</div>' +
-                '<div class="card-subtitle" style="margin-top:8px">施工阶段可进行招采</div>' +
-            '</div>';
+    // 渲染营销蓄客标签页
+    renderMarketingTab: function(project, state) {
+        return ProjectPages.renderMarketingTab(project, state);
     },
     
-    // 渲染单元规划标签页
-    renderPlanningTab: function(project) {
-        return '<div class="section-title" style="margin-top:16px">🏘️ 单元规划</div>' +
-            '<div class="card">' +
-                '<div class="card-title">户型规划</div>' +
-                '<div class="card-subtitle" style="margin-top:8px">设计阶段完成后可规划户型</div>' +
-            '</div>';
+    // 渲染签约回款标签页
+    renderContractingTab: function(project, state) {
+        return ProjectPages.renderContractingTab(project, state);
+    },
+    
+    // 渲染竣工交付标签页
+    renderDeliveryTab: function(project, state) {
+        return ProjectPages.renderDeliveryTab(project, state);
     },
     
     // 渲染项目资金管理标签页
-    renderProjectFinanceTab: function(project) {
-        return '<div class="section-title" style="margin-top:16px">💳 资金管理</div>' +
-            '<div class="card">' +
-                '<div class="card-title">资金计划</div>' +
-                '<div class="card-subtitle" style="margin-top:8px">根据工程进度安排资金</div>' +
-            '</div>';
+    renderProjectFinanceTab: function(project, state) {
+        return ProjectPages.renderProjectFinanceTab(project, state);
     },
     
     // 渲染营销页面
@@ -702,7 +695,8 @@ const Pages = {
         
         const tabs = [
             { label: '品牌建设' },
-            { label: '营销活动' }
+            { label: '预售开盘' },
+            { label: '营销蓄客' }
         ];
         
         let html = UI.tabs(tabs, activeTab);
@@ -729,12 +723,38 @@ const Pages = {
                     '<div class="card-subtitle">投入资金提升品牌价值</div>' +
                     '<div style="margin-top:10px;color:#f97316;font-weight:600">单次投入: ' + Utils.formatMoney(1000000) + '</div>' +
                 '</div>';
+        } else if (activeTab === 1) {
+            // 预售开盘
+            const activeProject = state.projects.find(function(p) {
+                return p.status === GameTypes.ProjectStatus.PRESALE || p.status === GameTypes.ProjectStatus.CONSTRUCTION;
+            });
+            
+            if (!activeProject) {
+                html += '<div class="section-title">💰 预售开盘</div>' +
+                    '<div class="card">' +
+                        '<div class="card-title">暂无预售项目</div>' +
+                        '<div class="card-subtitle">请先在项目页面选择项目并申请预售许可</div>' +
+                    '</div>';
+            } else {
+                html += '<div class="section-title">💰 预售开盘 - ' + activeProject.name + '</div>';
+                html += this.renderPresaleTab(activeProject, state);
+            }
         } else {
-            html += '<div class="section-title">📣 营销活动</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">暂无活动</div>' +
-                    '<div class="card-subtitle">更多功能开发中...</div>' +
-                '</div>';
+            // 营销蓄客
+            const activeProject = state.projects.find(function(p) {
+                return p.status === GameTypes.ProjectStatus.PRESALE || p.status === GameTypes.ProjectStatus.CONSTRUCTION;
+            });
+            
+            if (!activeProject) {
+                html += '<div class="section-title">📣 营销蓄客</div>' +
+                    '<div class="card">' +
+                        '<div class="card-title">暂无营销项目</div>' +
+                        '<div class="card-subtitle">请先在项目页面选择项目</div>' +
+                    '</div>';
+            } else {
+                html += '<div class="section-title">📣 营销蓄客 - ' + activeProject.name + '</div>';
+                html += this.renderMarketingTab(activeProject, state);
+            }
         }
         
         return html;
@@ -787,130 +807,536 @@ const Pages = {
         return html;
     },
     
-    // 渲染资本页面
+    // 渲染资本页面 - 增强版
     capital: function() {
         const state = GameState.get();
         this.tabStates.capital = this.tabStates.capital || 0;
         const activeTab = this.tabStates.capital;
         
         const tabs = [
+            { label: '银行中心' },
             { label: '融资中心' },
             { label: '三条红线' },
-            { label: '税务筹划' },
             { label: '财务报表' }
         ];
         
         let html = UI.tabs(tabs, activeTab);
         
         if (activeTab === 0) {
+            // 银行中心
+            html += this.renderBankCenter(state);
+        } else if (activeTab === 1) {
             // 融资中心
-            html += '<div class="section-title">🏦 融资中心</div>';
-            const products = InitialData.getLoanProducts();
-            products.forEach(function(product) {
-                html += '<div class="card" onclick="GameActions.takeLoan(\'' + product.id + '\')" style="cursor:pointer">' +
-                    '<div class="card-header">' +
-                        '<div class="card-title">' + product.name + '</div>' +
-                        '<span style="color:#22c55e;font-weight:700">利率 ' + (product.interestRate * 100).toFixed(1) + '%</span>' +
+            html += this.renderFinancingCenter(state);
+        } else if (activeTab === 2) {
+            // 三条红线
+            html += this.renderThreeRedLines(state);
+        } else if (activeTab === 3) {
+            // 财务报表
+            html += this.renderFinancialStatements(state);
+        }
+        
+        return html;
+    },
+    
+    // 渲染银行中心
+    renderBankCenter: function(state) {
+        let html = '<div class="section-title">🏦 银行中心</div>';
+        
+        // 银行卡片
+        const banks = InitialData.getBanks();
+        banks.forEach(function(bank) {
+            const relation = state.bankRelations[bank.id] || { relation: 50, totalLoans: 0 };
+            const relationLevel = this.getRelationLevel(relation.relation);
+            const relationColor = relationLevel === 'excellent' ? '#22c55e' : 
+                                 relationLevel === 'normal' ? '#f59e0b' : 
+                                 relationLevel === 'poor' ? '#ef4444' : '#dc2626';
+            
+            // 计算实际利率
+            let rateAdjustment = 0;
+            let quotaMultiplier = 1;
+            if (relation.relation > 80) {
+                rateAdjustment = -0.003;
+                quotaMultiplier = 1.2;
+            } else if (relation.relation >= 50 && relation.relation <= 79) {
+                // 正常
+            } else if (relation.relation >= 30 && relation.relation <= 49) {
+                rateAdjustment = 0.003;
+                quotaMultiplier = 0.8;
+            }
+            
+            const actualRate = ((bank.baseRate + rateAdjustment) * 100).toFixed(1);
+            
+            html += '<div class="card" style="cursor:pointer" onclick="CapitalActions.openBank(\'' + bank.id + '\')">' +
+                '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">' +
+                    '<div>' +
+                        '<div style="font-size:18px;font-weight:700">' + bank.name + '</div>' +
+                        '<div style="color:#94a3b8;font-size:12px;margin-top:4px">' + bank.feature + '</div>' +
                     '</div>' +
-                    '<div style="margin-top:10px;color:#94a3b8;font-size:13px">' +
-                        '最高额度: ' + Utils.formatMoney(product.maxAmount) + ' | 期限: ' + product.minTerm + '-' + product.maxTerm + '个月' +
+                    '<div style="text-align:right">' +
+                        '<div style="font-size:20px;font-weight:700;color:#22c55e">' + actualRate + '%</div>' +
+                        '<div style="color:#94a3b8;font-size:11px">实际利率</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="margin-bottom:10px">' +
+                    '<div style="display:flex;justify-content:space-between;margin-bottom:6px">' +
+                        '<span style="color:#94a3b8;font-size:12px">关系值</span>' +
+                        '<span style="font-weight:600;color:' + relationColor + ';font-size:14px">' + relation.relation + '</span>' +
+                    '</div>' +
+                    '<div class="progress-bar" style="height:10px">' +
+                        '<div class="progress-fill" style="width:' + relation.relation + '%;background:' + relationColor + '"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;font-size:12px">' +
+                    '<div style="color:#94a3b8">基础利率: <span style="color:#f97316;font-weight:600">' + (bank.baseRate * 100).toFixed(1) + '%</span></div>' +
+                    '<div style="color:#94a3b8">额度系数: <span style="color:#22c55e;font-weight:600">×' + quotaMultiplier.toFixed(1) + '</span></div>' +
+                '</div>' +
+                '<div style="margin-top:12px;padding:8px;background:rgba(59,130,246,0.1);border-radius:8px;font-size:12px;color:#94a3b8">' +
+                    '💡 ' + bank.description +
+                '</div>' +
+            '</div>';
+        }.bind(this));
+        
+        // 存款产品
+        html += '<div style="margin-top:20px"></div><div class="section-title">💰 存款产品</div>';
+        const deposits = InitialData.getDepositProducts();
+        deposits.forEach(function(deposit) {
+            html += '<div class="card">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center">' +
+                    '<div>' +
+                        '<div style="font-weight:600">' + deposit.name + '</div>' +
+                        '<div style="color:#94a3b8;font-size:12px;margin-top:4px">' + deposit.description + '</div>' +
+                    '</div>' +
+                    '<div style="text-align:right">' +
+                        '<div style="font-size:20px;font-weight:700;color:#22c55e">' + (deposit.rate * 100).toFixed(1) + '%</div>' +
+                        '<div style="color:#94a3b8;font-size:11px">年利率</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        });
+        
+        // 贷款记录
+        html += '<div style="margin-top:20px"></div><div class="section-title">📋 贷款记录</div>';
+        if (state.loans && state.loans.length > 0) {
+            state.loans.forEach(function(loan) {
+                const statusColor = loan.status === GameTypes.LoanStatus.ACTIVE ? '#22c55e' : 
+                                   loan.status === GameTypes.LoanStatus.PAID ? '#94a3b8' : '#ef4444';
+                html += '<div class="card">' +
+                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">' +
+                        '<div style="font-weight:600">' + loan.bankName + ' - ' + loan.productName + '</div>' +
+                        '<span style="color:' + statusColor + ';font-weight:600;font-size:12px">' + 
+                            (loan.status === GameTypes.LoanStatus.ACTIVE ? '进行中' : 
+                             loan.status === GameTypes.LoanStatus.PAID ? '已还清' : '已违约') + '</span>' +
+                    '</div>' +
+                    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;font-size:12px">' +
+                        '<div><span style="color:#94a3b8">金额:</span> <span style="font-weight:600">' + Utils.formatMoney(loan.amount) + '</span></div>' +
+                        '<div><span style="color:#94a3b8">利率:</span> <span style="font-weight:600;color:#22c55e">' + (loan.interestRate * 100).toFixed(1) + '%</span></div>' +
+                        '<div><span style="color:#94a3b8">期限:</span> <span style="font-weight:600">' + loan.term + '月</span></div>' +
                     '</div>' +
                 '</div>';
             });
-        } else if (activeTab === 1) {
-            // 三条红线
-            const debtRatio = state.company.liabilities > 0 && state.company.totalAssets > 0 
-                ? ((state.company.liabilities / state.company.totalAssets) * 100).toFixed(1) 
-                : 0;
-            const netDebtRatio = Math.min(150, Math.random() * 100 + 30).toFixed(1);
-            const cashShortTermDebt = Math.max(0.5, Math.random() * 2).toFixed(2);
-            
-            html += '<div class="section-title">📊 三条红线</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">剔除预收款后的资产负债率</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-top:10px">' +
-                        '<span style="color:' + (debtRatio > 70 ? '#ef4444' : '#22c55e') + ';font-weight:700;font-size:24px">' + debtRatio + '%</span>' +
-                        '<span style="color:#94a3b8">标准: ≤70%</span>' +
-                    '</div>' +
-                    '<div class="progress-bar" style="margin-top:10px">' +
-                        '<div class="progress-fill" style="width:' + Math.min(100, debtRatio) + '%;background:' + (debtRatio > 70 ? '#ef4444' : '#22c55e') + '"></div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">净负债率</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-top:10px">' +
-                        '<span style="color:' + (netDebtRatio > 100 ? '#ef4444' : '#22c55e') + ';font-weight:700;font-size:24px">' + netDebtRatio + '%</span>' +
-                        '<span style="color:#94a3b8">标准: ≤100%</span>' +
-                    '</div>' +
-                    '<div class="progress-bar" style="margin-top:10px">' +
-                        '<div class="progress-fill" style="width:' + Math.min(100, netDebtRatio) + '%;background:' + (netDebtRatio > 100 ? '#ef4444' : '#22c55e') + '"></div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">现金短债比</div>' +
-                    '<div style="display:flex;justify-content:space-between;margin-top:10px">' +
-                        '<span style="color:' + (cashShortTermDebt < 1 ? '#ef4444' : '#22c55e') + ';font-weight:700;font-size:24px">' + cashShortTermDebt + '</span>' +
-                        '<span style="color:#94a3b8">标准: ≥1.0</span>' +
-                    '</div>' +
-                '</div>';
-        } else if (activeTab === 2) {
-            // 税务筹划
-            html += '<div class="section-title">📋 税务筹划</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">增值税筹划</div>' +
-                    '<div class="card-subtitle" style="margin-top:8px">合理利用税收优惠政策</div>' +
-                    '<div style="margin-top:12px;color:#94a3b8;font-size:13px">预计节税: ' + Utils.formatMoney(Math.floor(Math.random() * 1000000) + 500000) + '</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">企业所得税筹划</div>' +
-                    '<div class="card-subtitle" style="margin-top:8px">优化成本结构，降低税负</div>' +
-                    '<div style="margin-top:12px;color:#94a3b8;font-size:13px">预计节税: ' + Utils.formatMoney(Math.floor(Math.random() * 2000000) + 1000000) + '</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">土地增值税筹划</div>' +
-                    '<div class="card-subtitle" style="margin-top:8px">合理规划项目结算方式</div>' +
-                    '<div style="margin-top:12px;color:#94a3b8;font-size:13px">预计节税: ' + Utils.formatMoney(Math.floor(Math.random() * 5000000) + 3000000) + '</div>' +
-                '</div>';
-        } else if (activeTab === 3) {
-            // 财务报表
-            html += '<div class="section-title">📈 财务报表</div>' +
-                '<div class="card">' +
-                    '<div class="card-title">资产负债表</div>' +
-                    '<div style="margin-top:15px">' +
-                        '<div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
-                            '<span style="color:#94a3b8">流动资产</span>' +
-                            '<span style="font-weight:600">' + Utils.formatMoney(state.company.cash) + '</span>' +
-                        '</div>' +
-                        '<div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
-                            '<span style="color:#94a3b8">非流动资产</span>' +
-                            '<span style="font-weight:600">' + Utils.formatMoney(state.company.totalAssets - state.company.cash) + '</span>' +
-                        '</div>' +
-                        '<div style="border-top:1px solid var(--border);margin:10px 0"></div>' +
-                        '<div style="display:flex;justify-content:space-between;font-weight:700">' +
-                            '<span>总资产</span>' +
-                            '<span style="color:#22c55e">' + Utils.formatMoney(state.company.totalAssets) + '</span>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="card" style="margin-top:16px">' +
-                    '<div class="card-title">利润表</div>' +
-                    '<div style="margin-top:15px">' +
-                        '<div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
-                            '<span style="color:#94a3b8">营业收入</span>' +
-                            '<span style="font-weight:600">' + Utils.formatMoney(Math.floor(Math.random() * 50000000) + 10000000) + '</span>' +
-                        '</div>' +
-                        '<div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
-                            '<span style="color:#94a3b8">营业成本</span>' +
-                            '<span style="font-weight:600">' + Utils.formatMoney(Math.floor(Math.random() * 30000000) + 5000000) + '</span>' +
-                        '</div>' +
-                        '<div style="border-top:1px solid var(--border);margin:10px 0"></div>' +
-                        '<div style="display:flex;justify-content:space-between;font-weight:700">' +
-                            '<span>净利润</span>' +
-                            '<span style="color:#f97316">' + Utils.formatMoney(state.company.monthlyProfit) + '</span>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+        } else {
+            html += '<div class="card" style="text-align:center;color:#64748b;padding:40px">暂无贷款记录</div>';
         }
+        
+        return html;
+    },
+    
+    // 渲染融资中心
+    renderFinancingCenter: function(state) {
+        let html = '<div class="section-title">💵 融资中心</div>';
+        
+        // 股权融资
+        html += '<div class="card">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+                '<div style="font-weight:700;font-size:16px">📈 股权融资</div>' +
+                '<span style="background:rgba(34,197,94,0.2);color:#22c55e;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600">股权稀释</span>' +
+            '</div>';
+        
+        const fundingRounds = InitialData.getFundingRounds();
+        const completedRounds = state.fundingHistory ? state.fundingHistory.length : 0;
+        
+        fundingRounds.forEach(function(round, index) {
+            const isCompleted = index < completedRounds;
+            const isCurrent = index === completedRounds;
+            const isLocked = index > completedRounds;
+            
+            let bgColor = 'rgba(148,163,184,0.1)';
+            let borderColor = 'rgba(148,163,184,0.3)';
+            let statusText = '🔒 待解锁';
+            let opacity = 0.5;
+            
+            if (isCompleted) {
+                bgColor = 'rgba(34,197,94,0.1)';
+                borderColor = 'rgba(34,197,94,0.3)';
+                statusText = '✅ 已完成';
+                opacity = 1;
+            } else if (isCurrent) {
+                bgColor = 'rgba(249,115,22,0.1)';
+                borderColor = 'rgba(249,115,22,0.3)';
+                statusText = '🔥 当前可申请';
+                opacity = 1;
+            }
+            
+            html += '<div style="padding:12px;background:' + bgColor + ';border:1px solid ' + borderColor + ';border-radius:12px;margin-bottom:10px;opacity:' + opacity + ';cursor:' + (isCurrent ? 'pointer' : 'default') + '" ' + (isCurrent ? 'onclick="CapitalActions.applyFunding(\'' + round.id + '\')"' : '') + '>' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+                    '<div style="font-weight:600">' + round.name + '</div>' +
+                    '<span style="font-size:12px">' + statusText + '</span>' +
+                '</div>' +
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#94a3b8">' +
+                    '<div>稀释比例: ' + (round.dilutionMin * 100).toFixed(0) + '%-' + (round.dilutionMax * 100).toFixed(0) + '%</div>' +
+                    '<div>估值倍率: ' + round.valuationMultiple.min + 'x-' + round.valuationMultiple.max + 'x</div>' +
+                    '<div>营收门槛: ' + (round.revenueThreshold > 0 ? Utils.formatMoney(round.revenueThreshold) : '无') + '</div>' +
+                    '<div>' + round.description + '</div>' +
+                '</div>' +
+            '</div>';
+        });
+        
+        html += '</div>';
+        
+        // 债券融资
+        if (state.listedStatus && state.listedStatus.isListed) {
+            html += '<div class="card" style="margin-top:16px">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+                    '<div style="font-weight:700;font-size:16px">📊 债券融资</div>' +
+                    '<span style="background:rgba(59,130,246,0.2);color:#3b82f6;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600">上市公司</span>' +
+                '</div>' +
+                '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">' +
+                    '🏢 公司已上市，可以发行债券融资' +
+                '</div>' +
+            '</div>';
+        } else {
+            html += '<div class="card" style="margin-top:16px">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+                    '<div style="font-weight:700;font-size:16px">📊 债券融资</div>' +
+                    '<span style="background:rgba(148,163,184,0.2);color:#94a3b8;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600">未上市</span>' +
+                '</div>' +
+                '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">' +
+                    '🔒 完成IPO后可发行公司债券' +
+                '</div>' +
+            '</div>';
+        }
+        
+        return html;
+    },
+    
+    // 渲染三条红线
+    renderThreeRedLines: function(state) {
+        let html = '<div class="section-title">📊 三条红线监测</div>';
+        
+        const redLine = state.redLineStatus || {};
+        
+        // 当前档位
+        const tierColors = {
+            green: { bg: 'rgba(34,197,94,0.2)', text: '#22c55e', label: '🟢 绿档' },
+            yellow: { bg: 'rgba(245,158,11,0.2)', text: '#f59e0b', label: '🟡 黄档' },
+            orange: { bg: 'rgba(249,115,22,0.2)', text: '#f97316', label: '🟠 橙档' },
+            red: { bg: 'rgba(239,68,68,0.2)', text: '#ef4444', label: '🔴 红档' }
+        };
+        
+        const tier = redLine.tier || GameTypes.RedLineTier.GREEN;
+        const tierInfo = tierColors[tier];
+        
+        html += '<div class="card" style="background:' + tierInfo.bg + ';border-color:' + tierInfo.text + ';margin-bottom:20px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center">' +
+                '<div>' +
+                    '<div style="font-size:18px;font-weight:700;color:' + tierInfo.text + '">' + tierInfo.label + '</div>' +
+                    '<div style="color:#94a3b8;font-size:12px;margin-top:4px">' + this.getTierDescription(tier) + '</div>' +
+                '</div>' +
+                '<div style="font-size:32px;font-weight:800;color:' + tierInfo.text + '">' + this.getTierChinese(tier) + '</div>' +
+            '</div>' +
+        '</div>';
+        
+        // 红线一：剔除预收款资产负债率
+        const assetLiabRatio = redLine.assetLiabilityRatio || 0;
+        const assetLiabStatus = assetLiabRatio > 70 ? '🔴' : assetLiabRatio > 60 ? '🟡' : '🟢';
+        
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">' +
+                '<div style="font-weight:600">红线一 ' + assetLiabStatus + ' 剔除预收款资产负债率</div>' +
+                '<span style="font-size:20px;font-weight:700;color:' + (assetLiabRatio > 70 ? '#ef4444' : '#22c55e') + '">' + assetLiabRatio.toFixed(1) + '%</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;margin-bottom:6px">' +
+                '<span style="color:#94a3b8;font-size:12px">标准: ≤70%</span>' +
+                '<span style="color:#ef4444;font-size:12px">阈值: 70%</span>' +
+            '</div>' +
+            '<div class="progress-bar" style="height:12px">' +
+                '<div class="progress-fill" style="width:' + Math.min(100, assetLiabRatio) + '%;background:' + (assetLiabRatio > 70 ? '#ef4444' : '#22c55e') + '"></div>' +
+            '</div>' +
+            '<div style="margin-top:10px;font-size:12px;color:' + (assetLiabRatio > 70 ? '#ef4444' : '#94a3b8') + '">' +
+                (assetLiabRatio > 70 ? '⚠️ 已踩红线！需要降低负债率' : '✅ 符合标准') +
+            '</div>' +
+        '</div>';
+        
+        // 红线二：净负债率
+        const netDebtRatio = redLine.netDebtRatio || 50;
+        const netDebtStatus = netDebtRatio > 100 ? '🔴' : netDebtRatio > 80 ? '🟡' : '🟢';
+        
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">' +
+                '<div style="font-weight:600">红线二 ' + netDebtStatus + ' 净负债率</div>' +
+                '<span style="font-size:20px;font-weight:700;color:' + (netDebtRatio > 100 ? '#ef4444' : '#22c55e') + '">' + netDebtRatio.toFixed(1) + '%</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;margin-bottom:6px">' +
+                '<span style="color:#94a3b8;font-size:12px">标准: ≤100%</span>' +
+                '<span style="color:#ef4444;font-size:12px">阈值: 100%</span>' +
+            '</div>' +
+            '<div class="progress-bar" style="height:12px">' +
+                '<div class="progress-fill" style="width:' + Math.min(100, netDebtRatio) + '%;background:' + (netDebtRatio > 100 ? '#ef4444' : '#22c55e') + '"></div>' +
+            '</div>' +
+            '<div style="margin-top:10px;font-size:12px;color:' + (netDebtRatio > 100 ? '#ef4444' : '#94a3b8') + '">' +
+                (netDebtRatio > 100 ? '⚠️ 已踩红线！需要降低净负债' : '✅ 符合标准') +
+            '</div>' +
+        '</div>';
+        
+        // 红线三：现金短债比
+        const cashRatio = redLine.cashShortTermDebtRatio || 2.0;
+        const cashRatioStatus = cashRatio < 1 ? '🔴' : cashRatio < 1.5 ? '🟡' : '🟢';
+        
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">' +
+                '<div style="font-weight:600">红线三 ' + cashRatioStatus + ' 现金短债比</div>' +
+                '<span style="font-size:20px;font-weight:700;color:' + (cashRatio < 1 ? '#ef4444' : '#22c55e') + '">' + cashRatio.toFixed(2) + 'x</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;margin-bottom:6px">' +
+                '<span style="color:#94a3b8;font-size:12px">标准: ≥1.0倍</span>' +
+                '<span style="color:#ef4444;font-size:12px">阈值: 1.0倍</span>' +
+            '</div>' +
+            '<div class="progress-bar" style="height:12px">' +
+                '<div class="progress-fill" style="width:' + Math.min(100, (cashRatio / 2) * 100) + '%;background:' + (cashRatio < 1 ? '#ef4444' : '#22c55e') + '"></div>' +
+            '</div>' +
+            '<div style="margin-top:10px;font-size:12px;color:' + (cashRatio < 1 ? '#ef4444' : '#94a3b8') + '">' +
+                (cashRatio < 1 ? '⚠️ 已踩红线！现金不足以覆盖短期债务' : '✅ 符合标准') +
+            '</div>' +
+        '</div>';
+        
+        // 降档策略
+        html += '<div class="section-title" style="margin-top:24px">🎯 降档策略</div>';
+        if (tier !== GameTypes.RedLineTier.GREEN) {
+            html += '<div class="card" style="background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.3)">' +
+                '<div style="font-weight:600;margin-bottom:12px;color:#f97316">💡 建议操作</div>' +
+                '<div style="font-size:13px;color:#94a3b8;line-height:1.8">';
+            
+            if (assetLiabRatio > 70) {
+                html += '• 加速卖房回款（降价5-10%，2-4月见效）<br>';
+                html += '• 出售资产（急售7折，即时见效）<br>';
+                html += '• 引入战略投资者（出让5-15%股权）<br>';
+            }
+            
+            if (netDebtRatio > 100) {
+                html += '• 卖资产还债<br>';
+                html += '• 依靠利润慢慢偿还（6-18月）<br>';
+                html += '• 债转股（40%成功率）<br>';
+            }
+            
+            if (cashRatio < 1) {
+                html += '• 卖资产囤现金<br>';
+                html += '• 长债换短债（60%成功率）<br>';
+                html += '• 过桥贷款凑数（30%风险）<br>';
+            }
+            
+            html += '</div></div>';
+        } else {
+            html += '<div class="card" style="text-align:center;color:#22c55e;padding:30px">' +
+                '✅ 继续保持！您的公司处于绿档，健康运营中' +
+            '</div>';
+        }
+        
+        return html;
+    },
+    
+    // 渲染财务报表
+    renderFinancialStatements: function(state) {
+        let html = '<div class="section-title">📈 财务报表</div>';
+        
+        // 资产负债表
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+                '<div style="font-weight:700;font-size:16px">📊 资产负债表</div>' +
+                '<span style="color:#94a3b8;font-size:12px">' + Utils.formatDate(state.date) + '</span>' +
+            '</div>' +
+            '<div style="border-bottom:2px solid var(--border);margin-bottom:12px;padding-bottom:8px;font-weight:600">资产</div>' +
+            '<div style="margin-left:12px;margin-bottom:8px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">' +
+                    '<span>现金</span>' +
+                    '<span style="font-weight:600;color:#22c55e">' + Utils.formatMoney(state.company.cash) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  应收账款</span>' +
+                    '<span>' + Utils.formatMoney(Math.floor(state.company.totalAssets * 0.05)) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  存货</span>' +
+                    '<span>' + Utils.formatMoney(Math.floor(state.company.totalAssets * 0.3)) + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<div style="border-bottom:2px solid var(--border);margin-bottom:12px;padding-bottom:8px;font-weight:600">负债</div>' +
+            '<div style="margin-left:12px;margin-bottom:8px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">' +
+                    '<span>短期借款</span>' +
+                    '<span style="font-weight:600;color:#ef4444">' + Utils.formatMoney(Math.floor(state.company.liabilities * 0.4)) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">' +
+                    '<span>长期借款</span>' +
+                    '<span style="font-weight:600;color:#ef4444">' + Utils.formatMoney(Math.floor(state.company.liabilities * 0.6)) + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<div style="border-top:2px solid var(--border);padding-top:12px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700">' +
+                    '<span>净资产</span>' +
+                    '<span style="color:#22c55e">' + Utils.formatMoney(state.company.totalAssets - state.company.liabilities) + '</span>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+        
+        // 利润表
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+                '<div style="font-weight:700;font-size:16px">💹 利润表</div>' +
+                '<span style="color:#94a3b8;font-size:12px">本月</span>' +
+            '</div>' +
+            '<div style="margin-bottom:8px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">' +
+                    '<span>营业收入</span>' +
+                    '<span style="font-weight:600;color:#22c55e">' + Utils.formatMoney(Math.floor(Math.random() * 50000000) + 10000000) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  营业成本</span>' +
+                    '<span style="color:#ef4444">-' + Utils.formatMoney(Math.floor(Math.random() * 30000000) + 5000000) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  销售费用</span>' +
+                    '<span style="color:#ef4444">-' + Utils.formatMoney(Math.floor(Math.random() * 5000000) + 1000000) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  管理费用</span>' +
+                    '<span style="color:#ef4444">-' + Utils.formatMoney(Math.floor(Math.random() * 3000000) + 500000) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8">' +
+                    '<span>  财务费用</span>' +
+                    '<span style="color:#ef4444">-' + Utils.formatMoney(Math.floor(Math.random() * 2000000) + 500000) + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<div style="border-top:2px solid var(--border);padding-top:12px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700">' +
+                    '<span>净利润</span>' +
+                    '<span style="color:' + (state.company.monthlyProfit >= 0 ? '#22c55e' : '#ef4444') + '">' + 
+                        Utils.formatMoney(state.company.monthlyProfit) + '</span>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+        
+        // 财务指标
+        html += '<div class="section-title" style="margin-top:24px">📊 财务分析</div>';
+        
+        const debtRatio = state.company.liabilities > 0 && state.company.totalAssets > 0 
+            ? ((state.company.liabilities / state.company.totalAssets) * 100).toFixed(1) 
+            : 0;
+        const roe = state.company.totalAssets > 0 
+            ? ((state.company.monthlyProfit / state.company.totalAssets) * 100).toFixed(1) 
+            : 0;
+        const grossMargin = Math.floor(Math.random() * 20) + 20;
+        const netMargin = Math.floor(Math.random() * 10) + 5;
+        
+        html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+            '<div class="card">' +
+                '<div style="color:#94a3b8;font-size:12px">毛利率</div>' +
+                '<div style="font-size:24px;font-weight:700;color:#22c55e;margin-top:4px">' + grossMargin + '%</div>' +
+                '<div style="font-size:11px;color:#94a3b8;margin-top:4px">' + (grossMargin > 30 ? '⬆ 优秀' : grossMargin > 20 ? '➡ 良好' : '⬇ 较低') + '</div>' +
+            '</div>' +
+            '<div class="card">' +
+                '<div style="color:#94a3b8;font-size:12px">净利率</div>' +
+                '<div style="font-size:24px;font-weight:700;color:#22c55e;margin-top:4px">' + netMargin + '%</div>' +
+                '<div style="font-size:11px;color:#94a3b8;margin-top:4px">' + (netMargin > 10 ? '⬆ 优秀' : netMargin > 5 ? '➡ 良好' : '⬇ 较低') + '</div>' +
+            '</div>' +
+            '<div class="card">' +
+                '<div style="color:#94a3b8;font-size:12px">ROE</div>' +
+                '<div style="font-size:24px;font-weight:700;color:#3b82f6;margin-top:4px">' + roe + '%</div>' +
+                '<div style="font-size:11px;color:#94a3b8;margin-top:4px">净资产收益率</div>' +
+            '</div>' +
+            '<div class="card">' +
+                '<div style="color:#94a3b8;font-size:12px">资产负债率</div>' +
+                '<div style="font-size:24px;font-weight:700;color:' + (debtRatio > 70 ? '#ef4444' : '#22c55e') + ';margin-top:4px">' + debtRatio + '%</div>' +
+                '<div style="font-size:11px;color:#94a3b8;margin-top:4px">' + (debtRatio > 70 ? '⚠ 偏高' : '✅ 正常') + '</div>' +
+            '</div>' +
+        '</div>';
+        
+        return html;
+    },
+    
+    // 获取关系等级
+    getRelationLevel: function(relation) {
+        if (relation > 80) return 'excellent';
+        if (relation >= 50) return 'normal';
+        if (relation >= 30) return 'poor';
+        return 'critical';
+    },
+    
+    // 获取档位描述
+    getTierDescription: function(tier) {
+        const descriptions = {
+            green: '正常经营，银行优先放贷',
+            yellow: '踩1条红线，审批+1月利率+0.5%拿地受限',
+            orange: '踩2条红线，只能借新还旧股价-10%',
+            red: '踩3条红线，全渠道冻结30天倒计时'
+        };
+        return descriptions[tier] || '';
+    },
+    
+    // 获取档位中文
+    getTierChinese: function(tier) {
+        const chinese = {
+            green: '绿',
+            yellow: '黄',
+            orange: '橙',
+            red: '红'
+        };
+        return chinese[tier] || '';
+    },
+    
+    // 渲染税务筹划
+    taxPlanning: function() {
+        const state = GameState.get();
+        let html = '<div class="section-title">📋 税务筹划</div>';
+        
+        // 企业所得税
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div class="card-title">🏢 企业所得税</div>' +
+            '<div class="card-subtitle">基本税率：25%</div>' +
+            '<div style="margin-top:12px">' +
+                '<div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px">' +
+                    '<span style="color:#94a3b8">本月应税收入</span>' +
+                    '<span style="font-weight:600">' + Utils.formatMoney(Math.floor(Math.random() * 50000000) + 10000000) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px">' +
+                    '<span style="color:#94a3b8">应纳税额</span>' +
+                    '<span style="font-weight:600;color:#ef4444">' + Utils.formatMoney(Math.floor(Math.random() * 10000000) + 2000000) + '</span>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+        
+        // 增值税
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div class="card-title">💰 增值税</div>' +
+            '<div class="card-subtitle">房地产业增值税税率：9%</div>' +
+            '<div style="margin-top:12px;font-size:13px;color:#94a3b8">' +
+                '• 开发项目适用9%税率<br>' +
+                '• 老项目可选择简易计税5%<br>' +
+                '• 土地价款可以抵扣' +
+            '</div>' +
+        '</div>';
+        
+        // 土地增值税
+        html += '<div class="card" style="margin-bottom:16px">' +
+            '<div class="card-title">🏗️ 土地增值税</div>' +
+            '<div class="card-subtitle">超率累进税率 30%-60%</div>' +
+            '<div style="margin-top:12px;font-size:13px;color:#94a3b8">' +
+                '• 增值额未超过扣除项目金额50%：30%<br>' +
+                '• 增值额超过50%-100%：40%<br>' +
+                '• 增值额超过100%-200%：50%<br>' +
+                '• 增值额超过200%：60%' +
+            '</div>' +
+        '</div>';
         
         return html;
     },

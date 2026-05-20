@@ -10,7 +10,17 @@
     
     <div v-if="enterpriseType === 'one-person'" class="bg-game-card/60 rounded-xl p-6 mb-6">
       <div class="text-amber-400 font-semibold mb-2">一人有限责任公司</div>
-      <p class="text-white/70">您100%持有公司股份</p>
+      <p class="text-white/70 mb-4">您100%持有公司股份</p>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white/5 rounded-lg p-3">
+          <div class="text-xs text-white/50 mb-1">认缴出资</div>
+          <div class="text-lg font-bold text-amber-400">{{ formatMoney(registeredCapital) }}</div>
+        </div>
+        <div class="bg-white/5 rounded-lg p-3">
+          <div class="text-xs text-white/50 mb-1">实缴出资</div>
+          <div class="text-lg font-bold text-green-400">{{ formatMoney(paidCapital) }}</div>
+        </div>
+      </div>
     </div>
     
     <div v-else class="space-y-4">
@@ -35,18 +45,41 @@
           </button>
         </div>
         
-        <div class="flex items-center gap-4">
-          <div class="flex-1">
-            <input
-              v-model.number="shareholder.ratio"
-              type="range"
-              min="shareholder.isPlayer ? 30 : 1"
-              max="100"
-              class="w-full"
-              @input="adjustRatios(shareholder.id)"
-            />
+        <div class="space-y-3">
+          <!-- 持股比例 -->
+          <div class="flex items-center gap-4">
+            <div class="flex-1">
+              <label class="text-xs text-white/50 mb-1 block">持股比例</label>
+              <input
+                v-model.number="shareholder.ratio"
+                type="range"
+                min="shareholder.isPlayer ? 30 : 1"
+                max="100"
+                class="w-full"
+                @input="adjustRatios(shareholder.id)"
+              />
+            </div>
+            <span class="text-white font-mono w-16 text-right">{{ shareholder.ratio }}%</span>
           </div>
-          <span class="text-white font-mono w-16 text-right">{{ shareholder.ratio }}%</span>
+          
+          <!-- 出资额 -->
+          <div class="flex items-center gap-4">
+            <div class="flex-1">
+              <label class="text-xs text-white/50 mb-1 block">实缴出资额</label>
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400">¥</span>
+                <input
+                  v-model.number="shareholder.capital"
+                  type="number"
+                  min="10000"
+                  step="10000"
+                  class="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500"
+                  @input="updateCapital(shareholder.id, shareholder.capital)"
+                />
+              </div>
+            </div>
+            <span class="text-white/50 text-sm w-16 text-right">{{ formatMoney(shareholder.capital) }}</span>
+          </div>
         </div>
       </div>
       
@@ -59,27 +92,51 @@
         + 添加股东
       </button>
       
-      <!-- 持股比例检查 -->
+      <!-- 汇总信息 -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-white/5 rounded-xl p-4">
+          <div class="text-xs text-white/50 mb-1">总持股比例</div>
+          <div
+            :class="totalRatio === 100 ? 'text-green-400' : 'text-red-400'"
+            class="text-xl font-bold"
+          >
+            {{ totalRatio }}%
+          </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4">
+          <div class="text-xs text-white/50 mb-1">总实缴出资</div>
+          <div
+            :class="totalShareholderCapital >= paidCapital ? 'text-green-400' : 'text-amber-400'"
+            class="text-xl font-bold"
+          >
+            {{ formatMoney(totalShareholderCapital) }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- 检查提示 -->
       <div
         :class="[
           'p-4 rounded-xl border',
-          totalRatio === 100
+          totalRatio === 100 && totalShareholderCapital >= paidCapital
             ? 'bg-green-500/20 border-green-500/50'
             : 'bg-red-500/20 border-red-500/50'
         ]"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-white font-semibold">总持股比例</span>
-          <span
-            :class="totalRatio === 100 ? 'text-green-400' : 'text-red-400'"
-            class="font-mono font-bold"
-          >
-            {{ totalRatio }}%
-          </span>
+        <div class="space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-white font-semibold text-sm">持股比例检查</span>
+            <span :class="totalRatio === 100 ? 'text-green-400' : 'text-red-400'" class="text-sm font-bold">
+              {{ totalRatio === 100 ? '✓ 正确' : '✗ 错误' }}
+            </span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-white font-semibold text-sm">出资额检查</span>
+            <span :class="totalShareholderCapital >= paidCapital ? 'text-green-400' : 'text-red-400'" class="text-sm font-bold">
+              {{ totalShareholderCapital >= paidCapital ? '✓ 充足' : '✗ 不足' }}
+            </span>
+          </div>
         </div>
-        <p v-if="totalRatio !== 100" class="text-sm text-white/60 mt-1">
-          总持股比例必须等于100%
-        </p>
       </div>
     </div>
     
@@ -93,10 +150,10 @@
       </button>
       <button
         @click="handleComplete"
-        :disabled="enterpriseType !== 'one-person' && totalRatio !== 100"
+        :disabled="!canProceed"
         :class="[
           'flex-1 py-3 px-6 rounded-xl font-bold transition-all',
-          enterpriseType === 'one-person' || totalRatio === 100
+          canProceed
             ? 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white'
             : 'bg-white/10 text-white/30 cursor-not-allowed'
         ]"
@@ -119,8 +176,23 @@ const registrationStore = useRegistrationStore()
 const enterpriseType = computed(() => registrationStore.data.enterpriseType)
 const shareholders = computed(() => registrationStore.data.shareholders)
 const totalRatio = computed(() => registrationStore.totalRatio)
+const paidCapital = computed(() => registrationStore.paidCapital)
+const registeredCapital = computed(() => registrationStore.data.registeredCapital)
+const totalShareholderCapital = computed(() => registrationStore.totalShareholderCapital)
 
-const newShareholderName = ref('')
+const canProceed = computed(() => {
+  if (enterpriseType.value === 'one-person') return true
+  return totalRatio.value === 100 && totalShareholderCapital.value >= paidCapital.value
+})
+
+function formatMoney(num: number): string {
+  if (num >= 100000000) {
+    return (num / 100000000).toFixed(2) + '亿'
+  } else if (num >= 10000) {
+    return (num / 10000).toFixed(2) + '万'
+  }
+  return num.toFixed(0) + '元'
+}
 
 function adjustRatios(changedId: string) {
   const others = shareholders.value.filter(s => s.id !== changedId)
@@ -143,7 +215,21 @@ function adjustRatios(changedId: string) {
       const last = shareholders.value[shareholders.value.length - 1]
       last.ratio += (100 - newTotal)
     }
+    
+    // 更新出资额
+    updateAllCapitals()
   }
+}
+
+function updateAllCapitals() {
+  shareholders.value.forEach(shareholder => {
+    const expectedCapital = Math.floor((paidCapital.value * shareholder.ratio) / 100)
+    shareholder.capital = expectedCapital
+  })
+}
+
+function updateCapital(id: string, capital: number) {
+  registrationStore.updateShareholderCapital(id, capital)
 }
 
 function addNewShareholder() {
@@ -159,6 +245,10 @@ function addNewShareholder() {
 
 function removeShareholder(id: string) {
   registrationStore.removeShareholder(id)
+  // 调整剩余股东比例
+  if (shareholders.value.length > 0) {
+    adjustRatios(shareholders.value[0].id)
+  }
 }
 
 function handleBack() {
@@ -166,7 +256,7 @@ function handleBack() {
 }
 
 function handleComplete() {
-  if (enterpriseType.value === 'one-person' || totalRatio.value === 100) {
+  if (canProceed.value) {
     emit('complete')
   }
 }

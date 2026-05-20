@@ -8,32 +8,62 @@
       选择公司注册地，此将决定您的初始可开发区域
     </p>
     
-    <!-- 区域选择 -->
-    <div class="space-y-6">
-      <div v-for="(regionProvinces, regionName) in provinces" :key="regionName" class="bg-game-card/60 rounded-xl p-4">
-        <h3 class="text-lg font-semibold text-amber-400 mb-3">{{ regionName }}</h3>
-        <div class="grid grid-cols-2 gap-2">
-          <button
-            v-for="province in regionProvinces"
-            :key="province.id"
-            @click="selectProvince(province)"
-            :class="[
-              'w-full text-left p-3 rounded-lg border-2 transition-all',
-              selectedProvince?.id === province.id
-                ? 'border-amber-500 bg-amber-500/20'
-                : 'border-white/10 hover:border-white/30 hover:bg-white/5'
-            ]"
-          >
-            <div class="font-semibold text-white mb-1">{{ province.name }}</div>
-            <div class="grid grid-cols-2 gap-1 text-xs text-white/60">
-              <div>热度: <span :class="getHeatColor(province.heat)">{{ province.heat }}</span></div>
-              <div>地价: ¥{{ formatNumber(province.landPrice) }}</div>
-              <div>政策: {{ province.policy }}%</div>
-              <div>竞争: {{ province.competition }}%</div>
-            </div>
-          </button>
+    <!-- 区域标签 -->
+    <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+      <button
+        v-for="region in regionNames"
+        :key="region"
+        @click="selectedRegion = region"
+        :class="[
+          'px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all',
+          selectedRegion === region
+            ? 'bg-amber-500 text-black'
+            : 'bg-white/10 text-white/70 hover:bg-white/20'
+        ]"
+      >
+        {{ region }}
+      </button>
+    </div>
+    
+    <!-- 省份选择 -->
+    <div class="grid grid-cols-1 gap-3">
+      <button
+        v-for="province in currentRegionProvinces"
+        :key="province.id"
+        @click="selectProvince(province)"
+        :class="[
+          'w-full text-left p-4 rounded-xl border-2 transition-all',
+          selectedProvince?.id === province.id
+            ? 'border-amber-500 bg-amber-500/20'
+            : 'border-white/10 hover:border-white/30 hover:bg-white/5'
+        ]"
+      >
+        <div class="flex justify-between items-start mb-2">
+          <div class="font-semibold text-white text-lg">{{ province.name }}</div>
+          <div class="flex items-center gap-2">
+            <span
+              :class="getHeatColor(province.heat)"
+              class="px-2 py-1 rounded text-xs font-semibold"
+            >
+              热度 {{ province.heat }}
+            </span>
+          </div>
         </div>
-      </div>
+        <div class="grid grid-cols-3 gap-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-white/50">地价</span>
+            <span class="text-amber-400 font-semibold">¥{{ formatNumber(province.landPrice) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-white/50">政策</span>
+            <span class="text-green-400 font-semibold">{{ province.policy }}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-white/50">竞争</span>
+            <span class="text-blue-400 font-semibold">{{ province.competition }}%</span>
+          </div>
+        </div>
+      </button>
     </div>
     
     <!-- 选中提示 -->
@@ -71,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRegistrationStore } from '@/stores/registration'
 import { provinces } from '@/data/registrationData'
@@ -81,6 +111,13 @@ const router = useRouter()
 const registrationStore = useRegistrationStore()
 
 const selectedProvince = ref<any>(null)
+const selectedRegion = ref<string>('华北')
+
+const regionNames = computed(() => Object.keys(provinces))
+
+const currentRegionProvinces = computed(() => {
+  return provinces[selectedRegion.value as keyof typeof provinces] || []
+})
 
 function selectProvince(province: any) {
   selectedProvince.value = province
@@ -88,10 +125,10 @@ function selectProvince(province: any) {
 }
 
 function getHeatColor(heat: number) {
-  if (heat >= 80) return 'text-red-400'
-  if (heat >= 60) return 'text-orange-400'
-  if (heat >= 40) return 'text-yellow-400'
-  return 'text-green-400'
+  if (heat >= 80) return 'bg-red-500/30 text-red-300'
+  if (heat >= 60) return 'bg-orange-500/30 text-orange-300'
+  if (heat >= 40) return 'bg-yellow-500/30 text-yellow-300'
+  return 'bg-green-500/30 text-green-300'
 }
 
 function formatNumber(num: number) {

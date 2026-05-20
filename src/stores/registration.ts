@@ -6,6 +6,7 @@ export interface Shareholder {
   name: string
   ratio: number
   isPlayer: boolean
+  capital: number
 }
 
 export interface RegistrationState {
@@ -65,7 +66,7 @@ export const useRegistrationStore = defineStore('registration', () => {
     fullCompanyName: '',
     enterpriseType: null,
     shareholders: [
-      { id: '1', name: '玩家', ratio: 100, isPlayer: true }
+      { id: '1', name: '玩家', ratio: 100, isPlayer: true, capital: 10000000 }
     ],
     registeredCapital: 50000000,
     paidRatio: 20,
@@ -95,6 +96,10 @@ export const useRegistrationStore = defineStore('registration', () => {
   
   const paidCapital = computed(() => {
     return Math.floor(data.value.registeredCapital * data.value.paidRatio / 100)
+  })
+  
+  const totalShareholderCapital = computed(() => {
+    return data.value.shareholders.reduce((sum, s) => sum + s.capital, 0)
   })
   
   const initialCash = computed(() => {
@@ -132,9 +137,18 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   }
   
-  function addShareholder(name: string, ratio: number) {
+  function addShareholder(name: string, ratio: number, capital: number = 0) {
     const id = Date.now().toString()
-    data.value.shareholders.push({ id, name, ratio, isPlayer: false })
+    // 根据持股比例计算默认出资额
+    const defaultCapital = Math.floor((paidCapital.value * ratio / 100))
+    data.value.shareholders.push({ id, name, ratio, isPlayer: false, capital: capital || defaultCapital })
+  }
+  
+  function updateShareholderCapital(id: string, capital: number) {
+    const shareholder = data.value.shareholders.find(s => s.id === id)
+    if (shareholder) {
+      shareholder.capital = capital
+    }
   }
   
   function removeShareholder(id: string) {
@@ -214,11 +228,13 @@ export const useRegistrationStore = defineStore('registration', () => {
     data,
     totalRatio,
     paidCapital,
+    totalShareholderCapital,
     initialCash,
     setProvince,
     setCompanyName,
     setEnterpriseType,
     updateShareholderRatio,
+    updateShareholderCapital,
     addShareholder,
     removeShareholder,
     setCapitalInfo,

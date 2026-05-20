@@ -5,7 +5,7 @@
       <div class="max-w-md mx-auto">
         <div class="flex justify-between items-center mb-3">
           <div class="text-lg font-bold text-white">{{ company?.name || '我的公司' }}</div>
-          <div class="text-white/70">{{ gameTime }}</div>
+          <div class="text-white/70 text-sm">{{ gameTime }}</div>
         </div>
         <div class="grid grid-cols-4 gap-2 text-center">
           <div class="bg-white/5 rounded-lg p-2">
@@ -29,9 +29,9 @@
     </div>
 
     <!-- 内容区域 -->
-    <div class="flex-1 overflow-y-auto pb-20">
+    <div class="flex-1 overflow-y-auto pb-32">
       <div class="max-w-md mx-auto p-4">
-        <!-- 总览模块 -->
+        <!-- 总览页面 -->
         <div v-if="activeTab === 'overview'">
           <div class="section-title">🏢 企业信息</div>
           <div class="card mb-4">
@@ -49,11 +49,11 @@
               </div>
               <div>
                 <div class="text-white/50 text-xs">成立日期</div>
-                <div class="font-semibold">{{ company?.establishmentDate }}</div>
+                <div class="font-semibold">{{ company?.establishmentDate || '-' }}</div>
               </div>
               <div>
                 <div class="text-white/50 text-xs">注册地区</div>
-                <div class="font-semibold">{{ company?.registrationProvince }}</div>
+                <div class="font-semibold">{{ company?.registrationProvince || '-' }}</div>
               </div>
             </div>
           </div>
@@ -108,11 +108,11 @@
           </div>
         </div>
 
-        <!-- 投资模块 -->
-        <div v-if="activeTab === 'investment'">
+        <!-- 投资系统页面 -->
+        <div v-else-if="activeTab === 'investment'">
           <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-            <button 
-              v-for="(tab, idx) in investmentTabs" 
+            <button
+              v-for="(tab, idx) in investmentTabs"
               :key="idx"
               class="btn-primary whitespace-nowrap text-sm"
               :class="activeInvestmentTab === idx ? 'bg-amber-500' : ''"
@@ -190,27 +190,19 @@
                   <div class="progress-fill" :style="{ width: (housingPriceIndex * 70) + '%' }"></div>
                 </div>
               </div>
-            </div>
-            <div class="card">
-              <div class="card-title">宏观经济指标</div>
-              <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
-                <div class="flex justify-between">
-                  <span class="text-white/50">GDP增速</span>
-                  <span class="font-semibold">{{ macroEconomy.gdpGrowthRate.toFixed(1) }}%</span>
+              <div class="mt-4">
+                <div class="flex justify-between mb-2">
+                  <span>市场需求</span>
+                  <span class="text-blue-400 font-semibold">{{ marketDemand.toFixed(0) }}%</span>
                 </div>
-                <div class="flex justify-between">
-                  <span class="text-white/50">利率</span>
-                  <span class="font-semibold">{{ (macroEconomy.interestRate * 100).toFixed(1) }}%</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-white/50">城镇化率</span>
-                  <span class="font-semibold">{{ macroEconomy.urbanizationRate.toFixed(0) }}%</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-white/50">人口</span>
-                  <span class="font-semibold">{{ (macroEconomy.population / 100000000).toFixed(1) }}亿</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" :style="{ width: marketDemand + '%', background: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)' }"></div>
                 </div>
               </div>
+            </div>
+            <div class="card">
+              <div class="card-title">经济周期</div>
+              <div class="card-subtitle" style="margin-top: 8px;">当前处于: {{ economicCycle }}</div>
             </div>
           </div>
 
@@ -270,8 +262,8 @@
           </div>
         </div>
 
-        <!-- 工程模块 -->
-        <div v-if="activeTab === 'project'">
+        <!-- 工程管理页面 -->
+        <div v-else-if="activeTab === 'project'">
           <div class="section-title">🏗️ 我的项目</div>
           <div v-if="projects.length === 0" class="card" style="text-align: center; color: #64748b; padding: 40px;">
             暂无项目，先去拿地吧！
@@ -300,11 +292,11 @@
           </div>
         </div>
 
-        <!-- 营销模块 -->
-        <div v-if="activeTab === 'marketing'">
+        <!-- 营销销售页面 -->
+        <div v-else-if="activeTab === 'marketing'">
           <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-            <button 
-              v-for="(tab, idx) in marketingTabs" 
+            <button
+              v-for="(tab, idx) in marketingTabs"
               :key="idx"
               class="btn-primary whitespace-nowrap text-sm"
               :class="activeMarketingTab === idx ? 'bg-amber-500' : ''"
@@ -356,11 +348,11 @@
           </div>
         </div>
 
-        <!-- 运营模块 -->
-        <div v-if="activeTab === 'operation'">
+        <!-- 运营管理页面 -->
+        <div v-else-if="activeTab === 'operation'">
           <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-            <button 
-              v-for="(tab, idx) in operationTabs" 
+            <button
+              v-for="(tab, idx) in operationTabs"
               :key="idx"
               class="btn-primary whitespace-nowrap text-sm"
               :class="activeOperationTab === idx ? 'bg-amber-500' : ''"
@@ -411,11 +403,11 @@
           </div>
         </div>
 
-        <!-- 资本模块 -->
-        <div v-if="activeTab === 'capital'">
+        <!-- 资本运作页面 -->
+        <div v-else-if="activeTab === 'capital'">
           <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-            <button 
-              v-for="(tab, idx) in capitalTabs" 
+            <button
+              v-for="(tab, idx) in capitalTabs"
               :key="idx"
               class="btn-primary whitespace-nowrap text-sm"
               :class="activeCapitalTab === idx ? 'bg-amber-500' : ''"
@@ -508,8 +500,8 @@
           </div>
         </div>
 
-        <!-- 个人模块 -->
-        <div v-if="activeTab === 'personal'">
+        <!-- 个人模块页面 -->
+        <div v-else-if="activeTab === 'personal'">
           <div class="section-title">👤 个人信息</div>
           <div class="card mb-4">
             <div class="flex items-center gap-4">
@@ -586,21 +578,234 @@
             </div>
           </div>
         </div>
+
+        <!-- 品牌模块页面 -->
+        <div v-else-if="activeTab === 'brand'">
+          <div class="section-title">🌟 品牌中心</div>
+          <div class="card mb-4">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <div class="text-3xl font-bold">{{ company?.brand?.score || 0 }}</div>
+                <div class="text-white/50 text-sm">品牌价值</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm text-white/50">品牌等级</div>
+                <div class="font-bold text-amber-400">{{ brandLevelText }}</div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="{ width: Math.min(100, (company?.brand?.score || 0) / 2) + '%' }"></div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('品牌建设功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🎯</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">品牌建设</div>
+                <div class="module-btn__subtitle">投入广告和营销，提升品牌价值</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('声誉管理功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🏆</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">声誉管理</div>
+                <div class="module-btn__subtitle">处理危机事件，维护企业声誉</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn cursor-pointer" @click="showToast('品牌授权功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">📜</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">品牌授权</div>
+                <div class="module-btn__subtitle">授权品牌使用，获取授权收入</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 治理系统页面 -->
+        <div v-else-if="activeTab === 'governance'">
+          <div class="section-title">🏛️ 公司治理</div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('高管团队功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">👔</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">高管团队</div>
+                <div class="module-btn__subtitle">招聘和管理公司高管</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('组织架构功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🏢</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">组织架构</div>
+                <div class="module-btn__subtitle">设计和优化公司组织架构</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('风控体系功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🛡️</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">风控体系</div>
+                <div class="module-btn__subtitle">建立风险控制和管理体系</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn cursor-pointer" @click="showToast('内部审计功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">📊</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">内部审计</div>
+                <div class="module-btn__subtitle">定期审计，防范经营风险</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 基础支撑页面 -->
+        <div v-else-if="activeTab === 'base'">
+          <div class="section-title">📊 基础支撑</div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('财务系统功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">💰</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">财务系统</div>
+                <div class="module-btn__subtitle">查看财务报表和分析数据</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('宏观经济功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">📈</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">宏观经济</div>
+                <div class="module-btn__subtitle">查看宏观经济数据和趋势</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('政策动态功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">📜</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">政策动态</div>
+                <div class="module-btn__subtitle">了解最新房地产政策变化</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('AI竞品功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🤖</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">AI竞品</div>
+                <div class="module-btn__subtitle">分析竞争对手动态</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn mb-3 cursor-pointer" @click="showToast('成就系统功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🏆</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">成就系统</div>
+                <div class="module-btn__subtitle">查看和解锁游戏成就</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+
+          <div class="module-btn cursor-pointer" @click="showToast('排行榜功能开发中')">
+            <div class="module-btn__left">
+              <div class="module-btn__icon">🏅</div>
+              <div class="module-btn__content">
+                <div class="module-btn__title">排行榜</div>
+                <div class="module-btn__subtitle">查看游戏排名和榜单</div>
+              </div>
+            </div>
+            <div class="module-btn__right">
+              <div class="module-btn__arrow">→</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- 底部导航栏 -->
     <div class="fixed bottom-0 left-0 right-0 bg-game-card/95 border-t border-white/10">
       <div class="max-w-md mx-auto">
-        <div class="flex justify-around py-2">
-          <button 
-            v-for="tab in tabs" 
+        <!-- 第一行导航 -->
+        <div class="grid grid-cols-4 gap-1 py-2 px-2 border-b border-white/10">
+          <button
+            v-for="tab in firstRowTabs"
             :key="tab.id"
-            class="flex flex-col items-center py-2 px-3 rounded-lg transition-all"
+            class="flex flex-col items-center py-2 px-1 rounded-lg transition-all"
             :class="activeTab === tab.id ? 'bg-white/10' : ''"
             @click="activeTab = tab.id"
           >
             <span class="text-xl">{{ tab.icon }}</span>
+            <span class="text-xs mt-1" :class="activeTab === tab.id ? 'text-amber-400' : 'text-white/70'">{{ tab.name }}</span>
+          </button>
+        </div>
+        <!-- 第二行导航 -->
+        <div class="grid grid-cols-5 gap-1 py-2 px-2">
+          <button
+            v-for="tab in secondRowTabs"
+            :key="tab.id"
+            class="flex flex-col items-center py-2 px-1 rounded-lg transition-all"
+            :class="activeTab === tab.id ? 'bg-white/10' : ''"
+            @click="activeTab = tab.id"
+          >
+            <span class="text-lg">{{ tab.icon }}</span>
             <span class="text-xs mt-1" :class="activeTab === tab.id ? 'text-amber-400' : 'text-white/70'">{{ tab.name }}</span>
           </button>
         </div>
@@ -623,14 +828,22 @@ const activeMarketingTab = ref(0)
 const activeOperationTab = ref(0)
 const activeCapitalTab = ref(0)
 
-const tabs = [
+// 第一行导航
+const firstRowTabs = [
   { id: 'overview', name: '总览', icon: '🏠' },
   { id: 'investment', name: '投资', icon: '📈' },
   { id: 'project', name: '工程', icon: '🏗️' },
-  { id: 'marketing', name: '营销', icon: '📣' },
+  { id: 'marketing', name: '营销', icon: '📣' }
+]
+
+// 第二行导航
+const secondRowTabs = [
   { id: 'operation', name: '运营', icon: '👥' },
   { id: 'capital', name: '资本', icon: '💵' },
-  { id: 'personal', name: '个人', icon: '👤' }
+  { id: 'personal', name: '个人', icon: '👤' },
+  { id: 'brand', name: '品牌', icon: '🌟' },
+  { id: 'governance', name: '治理', icon: '🏛️' },
+  { id: 'base', name: '基础', icon: '📊' }
 ]
 
 const investmentTabs = ['城市研究', '土地市场', '土地储备', '市场趋势', '竞争对手', '资产交易']
@@ -659,6 +872,8 @@ const threeRedLines = computed(() => company.value?.threeRedLines || {
 })
 
 const housingPriceIndex = computed(() => macroEconomy.value.housingPriceIndex || 1.0)
+const marketDemand = computed(() => 75)
+const economicCycle = computed(() => '稳定期')
 
 const gameTime = computed(() => {
   const time = gameStore.gameState?.gameTime
@@ -674,17 +889,29 @@ const qualificationLevel = computed(() => {
 
 const enterpriseTypeText = computed(() => {
   const type = company.value?.enterpriseType
-  const types: Record<string, string> = { 
-    'limited': '有限责任公司', 
+  const types: Record<string, string> = {
+    limited: '有限责任公司',
     'one-person': '一人有限公司',
-    'partnership': '合伙企业'
+    partnership: '合伙企业'
   }
   return types[type || ''] || '有限责任公司'
 })
 
+const brandLevelText = computed(() => {
+  const level = company.value?.brand?.level
+  const levels: Record<string, string> = {
+    unknown: '未知',
+    regional: '区域品牌',
+    national: '全国品牌',
+    'national-top': '全国知名',
+    'industry-benchmark': '行业标杆'
+  }
+  return levels[level || ''] || '区域品牌'
+})
+
 const debtRatio = computed(() => {
-  if (!company.value) return 0
-  if (company.value.totalAssets === 0) return 0
+  if (!company.value) return '0.0'
+  if (company.value.totalAssets === 0) return '0.0'
   return ((company.value.totalLiabilities / company.value.totalAssets) * 100).toFixed(1)
 })
 
@@ -717,13 +944,13 @@ const availableEmployees = [
   { id: 'emp4', name: '刘强', position: '工程师', salary: 20000 }
 ]
 
-function formatMoney(amount: number): string {
-  if (amount >= 100000000) {
-    return (amount / 100000000).toFixed(2) + '亿'
-  } else if (amount >= 10000) {
-    return (amount / 10000).toFixed(2) + '万'
+function formatMoney(num: number): string {
+  if (num >= 100000000) {
+    return (num / 100000000).toFixed(2) + '亿'
+  } else if (num >= 10000) {
+    return (num / 10000).toFixed(2) + '万'
   }
-  return amount.toFixed(0) + '元'
+  return num.toFixed(0) + '元'
 }
 
 function formatArea(area: number): string {
@@ -921,5 +1148,26 @@ function showToast(message: string) {
 .status-badge--info {
   background: rgba(59, 130, 246, 0.15);
   color: #3b82f6;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: rgba(249, 115, 22, 0.3);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.btn-full {
+  width: 100%;
 }
 </style>

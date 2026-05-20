@@ -99,5 +99,74 @@ const GameTypes = {
         PROJECT: 'project',
         BRAND: 'brand',
         PERSONAL: 'personal'
+    },
+    
+    // 银行类型
+    BankType: {
+        ICBC: 'icbc',
+        CCB: 'ccb',
+        ABC: 'abc',
+        BOC: 'boc',
+        JOINT_STOCK: 'joint_stock'
+    },
+    
+    // 信用等级
+    CreditLevel: {
+        AAA: 'AAA',
+        AA: 'AA',
+        A: 'A',
+        BBB: 'BBB',
+        BB: 'BB',
+        B: 'B',
+        C: 'C'
+    },
+    
+    // 三线档位
+    RedLineTier: {
+        GREEN: 'green',
+        YELLOW: 'yellow',
+        ORANGE: 'orange',
+        RED: 'red'
+    },
+    
+    // 贷款产品类型
+    LoanProductType: {
+        WORKING: 'working',
+        DEVELOPMENT: 'development',
+        PROPERTY: 'property',
+        M&A: 'm&a'
+    },
+    
+    // 融资轮次
+    FundingRound: {
+        ANGEL: 'angel',
+        A: 'a',
+        B: 'b',
+        C: 'c',
+        PRE_IPO: 'pre_ipo',
+        IPO: 'ipo'
+    },
+    
+    // 对赌类型
+    BetType: {
+        PERFORMANCE: 'performance',
+        LISTING: 'listing',
+        EQUITY_ADJUST: 'equity_adjust'
+    },
+    
+    // 贷款流程阶段
+    LoanStage: {
+        QUOTA: 'quota',
+        PRODUCT: 'product',
+        NEGOTIATION: 'negotiation',
+        TERMS: 'terms'
+    },
+    
+    // 还款状态
+    RepaymentStatus: {
+        ON_TIME: 'on_time',
+        INTEREST_ONLY: 'interest_only',
+        EXTENSION: 'extension',
+        OVERDUE: 'overdue'
     }
 };

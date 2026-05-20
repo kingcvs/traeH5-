@@ -121,26 +121,26 @@ const Pages = {
                     '</div>' +
                     '<div>' +
                         '<div style="color:#94a3b8;font-size:12px">房价指数</div>' +
-                        '<div style="font-weight:600">' + state.marketEnv.housingPriceIndex + '</div>' +
+                        '<div style="font-weight:600">' + state.marketEnv.housingPriceIndex.toFixed(1) + '</div>' +
                     '</div>' +
                     '<div>' +
                         '<div style="color:#94a3b8;font-size:12px">市场需求</div>' +
-                        '<div style="font-weight:600">' + state.marketEnv.marketDemand + '%</div>' +
+                        '<div style="font-weight:600">' + state.marketEnv.marketDemand.toFixed(0) + '%</div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
             '<div class="section-title">📈 宏观经济指标</div>' +
             '<div class="card">' +
                 '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:12px">' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">GDP增速</span><span style="font-weight:600">' + state.macroData.gdpGrowth + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">CPI</span><span style="font-weight:600">' + state.macroData.cpi + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">M2增速</span><span style="font-weight:600">' + state.macroData.m2Growth + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">5Y-LPR</span><span style="font-weight:600">' + state.macroData.lpr5y + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">房贷利率</span><span style="font-weight:600">' + state.macroData.mortgageRate + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">汇率</span><span style="font-weight:600">' + state.macroData.exchangeRate + '</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">居民杠杆</span><span style="font-weight:600">' + state.macroData.householdLeverage + '%</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">PMI</span><span style="font-weight:600">' + state.macroData.pmi + '</span></div>' +
-                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">消费信心</span><span style="font-weight:600">' + state.macroData.consumerConfidence + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">GDP增速</span><span style="font-weight:600">' + state.macroData.gdpGrowth.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">CPI</span><span style="font-weight:600">' + state.macroData.cpi.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">M2增速</span><span style="font-weight:600">' + state.macroData.m2Growth.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">5Y-LPR</span><span style="font-weight:600">' + state.macroData.lpr5y.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">房贷利率</span><span style="font-weight:600">' + state.macroData.mortgageRate.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">汇率</span><span style="font-weight:600">' + state.macroData.exchangeRate.toFixed(1) + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">居民杠杆</span><span style="font-weight:600">' + state.macroData.householdLeverage.toFixed(1) + '%</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">PMI</span><span style="font-weight:600">' + state.macroData.pmi.toFixed(1) + '</span></div>' +
+                    '<div style="display:flex;justify-content:space-between"><span style="color:#94a3b8">消费信心</span><span style="font-weight:600">' + state.macroData.consumerConfidence.toFixed(1) + '</span></div>' +
                 '</div>' +
             '</div>' +
             '<div class="section-title">📰 最近动态</div>';
@@ -267,7 +267,7 @@ const Pages = {
                     '<div style="margin-top:15px">' +
                         '<div style="display:flex;justify-content:space-between;margin-bottom:10px">' +
                             '<span>房价指数</span>' +
-                            '<span style="color:#22c55e;font-weight:600">' + (state.marketEnv?.housingPriceIndex || 1.0).toFixed(2) + '</span>' +
+                            '<span style="color:#22c55e;font-weight:600">' + (state.marketEnv?.housingPriceIndex || 1.0).toFixed(1) + '</span>' +
                         '</div>' +
                         '<div class="progress-bar">' +
                             '<div class="progress-fill" style="width:' + ((state.marketEnv?.housingPriceIndex || 1.0) * 70) + '%"></div>' +
@@ -276,7 +276,7 @@ const Pages = {
                     '<div style="margin-top:15px">' +
                         '<div style="display:flex;justify-content:space-between;margin-bottom:10px">' +
                             '<span>市场需求</span>' +
-                            '<span style="color:#3b82f6;font-weight:600">' + (state.marketEnv?.marketDemand || 75) + '%</span>' +
+                            '<span style="color:#3b82f6;font-weight:600">' + (state.marketEnv?.marketDemand || 75).toFixed(0) + '%</span>' +
                         '</div>' +
                         '<div class="progress-bar">' +
                             '<div class="progress-fill" style="width:' + (state.marketEnv?.marketDemand || 75) + '%;background:linear-gradient(90deg,#3b82f6 0%,#60a5fa 100%)"></div>' +

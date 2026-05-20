@@ -1874,3 +1874,404 @@ body {
     font-weight: 600;
     color: var(--text-primary);
 }
+
+/* ==================== Responsive Design ==================== */
+
+/* 大屏幕设备 (桌面) */
+@media screen and (min-width: 1024px) {
+    .game-app,
+    #app {
+        max-width: 768px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* 平板设备 */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .game-app,
+    #app {
+        max-width: 100%;
+    }
+    
+    .header {
+        padding: 16px 24px;
+    }
+    
+    .date-display {
+        font-size: 18px;
+    }
+    
+    .time-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .bottom-nav {
+        padding: 16px;
+    }
+    
+    .nav-item {
+        padding: 10px;
+    }
+    
+    .nav-icon {
+        font-size: 24px;
+    }
+    
+    .nav-label {
+        font-size: 13px;
+    }
+    
+    .card {
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+}
+
+/* 手机设备 */
+@media screen and (max-width: 767px) {
+    .game-app,
+    #app {
+        max-width: 100%;
+    }
+    
+    .header {
+        padding: 10px 12px;
+    }
+    
+    .date-display {
+        font-size: 14px;
+    }
+    
+    .time-controls {
+        gap: 6px;
+    }
+    
+    .time-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    .main-content {
+        padding: 12px;
+        padding-bottom: 100px;
+    }
+    
+    .bottom-nav {
+        padding: 10px;
+        gap: 4px;
+    }
+    
+    .nav-row {
+        gap: 4px;
+    }
+    
+    .nav-item {
+        padding: 6px 4px;
+        min-width: auto;
+        flex: 1;
+    }
+    
+    .nav-icon {
+        font-size: 20px;
+    }
+    
+    .nav-label {
+        font-size: 10px;
+        display: none;
+    }
+    
+    .nav-item.active .nav-label {
+        display: block;
+    }
+    
+    .card {
+        padding: 12px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+    }
+    
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+    
+    .card-title {
+        font-size: 15px;
+    }
+    
+    .card-subtitle {
+        font-size: 12px;
+    }
+    
+    .finance-card {
+        padding: 12px;
+    }
+    
+    .finance-label {
+        font-size: 12px;
+    }
+    
+    .finance-value {
+        font-size: 16px;
+    }
+    
+    .modal {
+        margin: 10px;
+        padding: 16px;
+        max-height: calc(100vh - 20px);
+        overflow-y: auto;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .form-input,
+    .form-select {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .progress-bar {
+        height: 8px;
+    }
+    
+    .progress-fill {
+        height: 8px;
+    }
+    
+    .tab {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .company-header {
+        padding: 12px;
+    }
+    
+    .company-name {
+        font-size: 16px;
+    }
+    
+    .company-type {
+        font-size: 12px;
+    }
+    
+    .stat-row {
+        padding: 10px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+    
+    .stat-value {
+        font-size: 14px;
+    }
+    
+    .market-row {
+        padding: 8px;
+    }
+    
+    .market-label {
+        font-size: 11px;
+    }
+    
+    .market-value {
+        font-size: 13px;
+    }
+}
+
+/* 小屏手机 */
+@media screen and (max-width: 374px) {
+    .header {
+        padding: 8px 10px;
+    }
+    
+    .date-display {
+        font-size: 12px;
+    }
+    
+    .time-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .nav-icon {
+        font-size: 18px;
+    }
+    
+    .nav-label {
+        font-size: 9px;
+    }
+    
+    .main-content {
+        padding: 10px;
+        padding-bottom: 90px;
+    }
+    
+    .card {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .section-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    .card-title {
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .modal {
+        margin: 5px;
+        padding: 12px;
+    }
+    
+    .modal-title {
+        font-size: 16px;
+    }
+    
+    .finance-card {
+        padding: 10px;
+    }
+    
+    .finance-label {
+        font-size: 11px;
+    }
+    
+    .finance-value {
+        font-size: 14px;
+    }
+    
+    .market-value {
+        font-size: 12px;
+    }
+}
+
+/* 横屏模式 */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .game-app,
+    #app {
+        flex-direction: row;
+    }
+    
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .main-content {
+        margin-top: 60px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        padding-bottom: 10px;
+    }
+    
+    .bottom-nav {
+        position: fixed;
+        right: 0;
+        top: 60px;
+        bottom: 0;
+        width: auto;
+        flex-direction: column;
+        padding: 10px;
+        gap: 8px;
+        overflow-y: auto;
+    }
+    
+    .nav-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .nav-item {
+        padding: 12px;
+    }
+    
+    .nav-icon {
+        font-size: 24px;
+    }
+    
+    .nav-label {
+        display: block;
+        font-size: 11px;
+    }
+}
+
+/* 触摸优化 */
+@media (hover: none) and (pointer: coarse) {
+    .card:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    .btn:active {
+        transform: scale(0.95);
+    }
+    
+    .time-btn:active {
+        transform: scale(0.9);
+    }
+    
+    .nav-item:active {
+        background: var(--bg-card-hover);
+    }
+    
+    .menu-btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* 安全区域适配 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .game-app,
+    #app {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .bottom-nav {
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    
+    .main-content {
+        padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    }
+}
+
+/* 深色模式优化 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
